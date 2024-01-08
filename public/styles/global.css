@@ -1,6 +1,21 @@
+@font-face {
+    font-family: Poppins;
+    src: url("../fonts/Poppins/Poppins-Regular.ttf");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url("../fonts/Poppins/Poppins-SemiBold.ttf");
+    font-weight: 600;
+}
+
 * {
     box-sizing: border-box !important;
     color: white;
+    font-family: Poppins, sans-serif;
+    font-weight: bold;
+    transition: all .4s ease-out;
 }
 
 body,
@@ -40,14 +55,58 @@ body {
 
 .navbar-container > .navbar-background > .navbar-button{
     background-color: rgba(255,255,255,0.15);
-    min-height: 1.5em;
     border-radius: 10px;
-    padding: .25em;
     display: flex;
+    flex-direction: row;
+    gap: .5em;
     justify-content: center;
     align-items: center;
+    padding: 0 1em;
+    height: 100%;
+    cursor: pointer;
+    user-select: none;
 }
 
 .navbar-container > .navbar-background > img{
     max-height: 2.5em;
+}
+
+.navbar-container > .navbar-background > .navbar-user{
+    background-color: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: right;
+    align-items: center;
+    padding: 0 0 0 1em;
+    height: 100%;
+    cursor: pointer;
+    user-select: none;
+    height: 2.5em;
+    max-height: 2.5em;
+    min-width: fit-content;
+    max-width: 99px;
+    overflow: hidden;
+    right: 0;
+}
+
+.navbar-container > .navbar-background > .navbar-user > .user-img{
+    height: 2.5em;
+    max-height: 2.5em;
+    width: 2.5em;
+    max-width: 2.5em;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-container > .navbar-background > .navbar-user > .user-img > img{
+    height: 100%;
+    width: auto;
+}
+
+.spacerH{
+    max-width: 100%;
+    flex: 1;
 }
