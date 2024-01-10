@@ -1,0 +1,46 @@
+* {
+    color: black;
+}
+
+body,
+html {
+    background-color: white;
+    background: white;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+body>div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+}
+
+body>div>.section {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    min-height: 100%;
+}
+
+.section:nth-child(1){
+    background: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    padding: 1em;
+}
+
+.section:nth-child(1) > img{
+    max-height: 70%;
+}
+
+.section:nth-child(1) > p{
+    max-height: 80%;
+    max-width: 40em;
+    color: white;
+}
