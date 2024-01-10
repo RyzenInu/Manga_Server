@@ -12,6 +12,15 @@ html {
 }
 
 body>div {
+    -ms-overflow-style: none !important; /* IE and Edge */
+    scrollbar-width: none !important; /* Firefox */
+}
+
+body>div::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari and Opera */
+}
+
+body>div {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -25,7 +34,7 @@ body>div>.section {
     min-height: 100%;
 }
 
-.section:nth-child(1){
+.section:nth-child(1) {
     background: black;
     display: flex;
     flex-direction: row;
@@ -35,11 +44,11 @@ body>div>.section {
     padding: 1em;
 }
 
-.section:nth-child(1) > img{
+.section:nth-child(1)>img {
     max-height: 70%;
 }
 
-.section:nth-child(1) > p{
+.section:nth-child(1)>p {
     max-height: 80%;
     max-width: 40em;
     color: white;
