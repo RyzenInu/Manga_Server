@@ -1,11 +1,11 @@
 const mqtt = require('mqtt');
 
 class MqttHandler {
-  constructor() {
-    this.mqttClient = null;
-    this.host = 'YOUR_HOST';
-    this.username = 'YOUR_USER'; // mqtt credentials if these are needed to connect
-    this.password = 'YOUR_PASSWORD';
+  constructor(host, clientName, username, password) {
+    this.mqttClient = clientName;
+    this.host = host;
+    this.username = username; // mqtt credentials if these are needed to connect
+    this.password = password;
   }
   
   connect() {
