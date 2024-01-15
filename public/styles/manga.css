@@ -120,8 +120,14 @@ body>div>.section {
     transition: all 0.05s ease-in;
 }
 
+#topBar {
+    width: 100%;
+    max-height: 3em;
+}
 
-#topbar {}
+#topBar > #btnLabManager{
+
+}
 
 @media only screen and (max-width: 600px) {
     

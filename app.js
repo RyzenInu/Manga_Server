@@ -11,7 +11,7 @@ app.use(express.static("./public"))
 app.set('view engine', 'ejs')
 app.set("views", "./views")
 
-const mqtt = new MqttHandler("mqtt://127.23.5.214", "manga_server", "pwdam", "password");
+const mqtt = new MqttHandler("mqtt://172.23.5.214", "manga_server", "pwdam", "pwdam");
 mqtt.connect();
 
 app.get("/", (req, res) => { res.redirect("/manga") })

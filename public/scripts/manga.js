@@ -18,4 +18,8 @@ scrollable.addEventListener("scroll", () => {
         scrollPrevBtn.style.opacity = 1;
         scrollPrevBtn.style.visibility = "visible";
     }
+    var scrollBottom = () => {
+        
+    }
+    console.log(scrollable.scrollTop);
 })
