@@ -1,33 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manga</title>
     <%- include('./head') %>
-    <link rel="stylesheet" href="../styles/manga.css">
+        <link rel="stylesheet" href="../styles/manga.css">
 </head>
+
 <body>
     <div id="scrollable">
         <div class="section">
+            <div id="topBar">
+                <div id="btnLabManager">
+                    <img src="./images/labManagerLogoH" alt="Manga's Lab Manager logo">
+                    Lab Manager
+                </div>
+            </div>
             <img src="./images/logoV.png">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere facilis tempora ut, aut perspiciatis asperiores quisquam esse cum ipsum sunt officia iusto maiores. Vero sunt nihil officia enim modi numquam.
-            Culpa est error iure unde fugit? Similique expedita voluptates blanditiis eum maiores consequuntur? Beatae voluptates distinctio voluptatum recusandae eius! Quibusdam placeat blanditiis sapiente dolorum voluptatem laboriosam iusto soluta rem sequi.
-            Quaerat veniam, iste voluptatibus autem repellendus magni consequatur illo delectus neque mollitia, suscipit nisi officia ipsa soluta. Ipsa culpa nostrum, nesciunt cum, sapiente eligendi perferendis enim a laboriosam autem commodi!
-            Impedit debitis ipsum, tenetur harum quia magni obcaecati molestias veritatis deserunt distinctio minus ad, qui officiis accusantium beatae quod unde numquam cum? Qui reiciendis error consectetur, possimus nisi molestiae labore.</p>
-            <div class="nextSectionIndicator" onclick="document.getElementById('scrollable').scrollTo(0, (document.getElementById('scrollable').getBoundingClientRect().top + document.body.clientHeight)); console.log(document.body.clientHeight);">
-                Next Page
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere facilis tempora ut, aut perspiciatis
+                asperiores quisquam esse cum ipsum sunt officia iusto maiores. Vero sunt nihil officia enim modi
+                numquam.
+                Culpa est error iure unde fugit? Similique expedita voluptates blanditiis eum maiores consequuntur?
+                Beatae voluptates distinctio voluptatum recusandae eius! Quibusdam placeat blanditiis sapiente dolorum
+                voluptatem laboriosam iusto soluta rem sequi.
+                Quaerat veniam, iste voluptatibus autem repellendus magni consequatur illo delectus neque mollitia,
+                suscipit nisi officia ipsa soluta. Ipsa culpa nostrum, nesciunt cum, sapiente eligendi perferendis enim
+                a laboriosam autem commodi!
+                Impedit debitis ipsum, tenetur harum quia magni obcaecati molestias veritatis deserunt distinctio minus
+                ad, qui officiis accusantium beatae quod unde numquam cum? Qui reiciendis error consectetur, possimus
+                nisi molestiae labore.</p>
+            <div id="prevSectionIndicator">
+                <span class="material-symbols-rounded">
+                    keyboard_arrow_up
+                </span>
+            </div>
+            <div id="nextSectionIndicator">
                 <span class="material-symbols-rounded">
                     keyboard_arrow_down
                 </span>
             </div>
         </div>
         <div class="section">
-            
+
         </div>
         <div class="section">
-            
+
         </div>
+
     </div>
+    <script src="./scripts/manga.js"></script>
 </body>
+
 </html>
