@@ -1,6 +1,7 @@
 var scrollPrevBtn = document.getElementById("prevSectionIndicator");
 var scrollNextBtn = document.getElementById("nextSectionIndicator");
 var scrollable = document.getElementById('scrollable');
+var labManagerBtn = document.getElementById('btnLabManager');
 
 scrollPrevBtn.addEventListener("click", (event) => {
     scrollable.scrollTo(0, (scrollable.scrollTop - document.body.clientHeight));
@@ -22,4 +23,8 @@ scrollable.addEventListener("scroll", () => {
         
     }
     console.log(scrollable.scrollTop);
+})
+
+labManagerBtn.addEventListener("click", (event) => {
+    location.href = "/login"
 })

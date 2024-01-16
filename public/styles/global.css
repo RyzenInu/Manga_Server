@@ -24,7 +24,7 @@
     color: var(--color-primary);
     font-family: Poppins, sans-serif;
     font-weight: bold;
-    transition: all .2s ease;
+    transition: all .2s ease-in-out;
 }
 
 body,
@@ -202,6 +202,7 @@ body {
     max-width: 0%;
     width: 80%;
     z-index: 1;
+    transition: all .5s cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 #userPopupCloseBtn {
