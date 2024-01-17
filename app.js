@@ -3,6 +3,7 @@ const requestHandlers = require("./scripts/requestHandlers")
 const bodyParser = require("body-parser")
 const app = express()
 const MqttHandler = require("./scripts/mqttHandler");
+const options = require("./options.json");
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -21,6 +22,6 @@ app.get("/equipment", (req, res) => { res.render("equipment") })
 app.get("/stats", (req, res) => { res.render("stats") })
 app.get("/login", (req, res) => { res.render("login") })
 
-app.listen(2000, () => {
-    console.log("Server running on http://localhost:2000/");
+app.listen(options.server.port, () => {
+    console.log(`Server running on http://localhost:${options.server.port}/`);
 });
