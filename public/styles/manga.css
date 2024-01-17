@@ -45,15 +45,13 @@ body>div>.section {
     justify-content: center;
 }
 
-.section:nth-child(odd){
+.section:nth-child(odd) {
     background: black;
 }
 
 #bigLogo {
     max-height: 100%;
     max-width: 100%;
-    min-width: 10em;
-    flex: 1;
 }
 
 .section:nth-child(1) .paragraph {
@@ -61,6 +59,13 @@ body>div>.section {
     text-align: justify;
     text-justify: inter-word;
     flex: 2;
+    margin: 0;
+}
+
+.section:nth-child(1) #imgContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .sectionContent {
@@ -70,6 +75,7 @@ body>div>.section {
     justify-content: center;
     align-items: center;
     gap: 1em;
+    flex: 1;
 }
 
 #nextSectionIndicator,
@@ -120,16 +126,45 @@ body>div>.section {
     transition: all 0.05s ease-in;
 }
 
+#topBar {
+    width: 100%;
+    height: 4em;
+    padding: .5em;
+    background: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 
-#topbar {}
+#btnLabManager {
+    height: 100%;
+    width: min-content;
+    padding: .5em;
+    background-color: black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#btnLabManager:hover {
+    scale: 1.05;
+}
+
+#topBar>#btnLabManager>img {
+    height: 100%;
+}
+
+#topBar {}
 
 @media only screen and (max-width: 600px) {
-    
-
-    .section:nth-child(1)>p {
-        min-height: fit-content;
+    .section:nth-child(1) .sectionContent {
+        flex-direction: column;
+        max-height: 100%;
+        padding: 1em;
     }
 
+    .section:nth-child(1) .sectionContent #imgContainer {
+        max-height: 6em;
+    }
 
     .section:nth-child(1)>img {
         max-height: 20%;

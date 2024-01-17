@@ -1,5 +1,7 @@
-const login = () => {
+const createUser = () => {
     
 }
 
-module.exports.login = login;
+const userLogin
+
+module.exports.createUser = createUser;

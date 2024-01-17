@@ -7,7 +7,7 @@ class MqttHandler {
     this.username = username; // mqtt credentials if these are needed to connect
     this.password = password;
   }
-  
+
   connect() {
     // Connect mqtt with credentials (in case of needed, otherwise we can omit 2nd param)
     this.mqttClient = mqtt.connect(this.host, { username: this.username, password: this.password });
@@ -24,11 +24,15 @@ class MqttHandler {
     });
 
     // mqtt subscriptions
-    //this.mqttClient.subscribe('mytopic', {qos: 0});
+    this.mqttClient.subscribe('#', { qos: 0 });
 
     // When a message arrives, console.log it
     this.mqttClient.on('message', function (topic, message) {
-      console.log(message.toString());
+      try {
+        console.log(JSON.parse(message.toString()));
+      } catch (e) {
+        console.log(e);
+      }
     });
 
     this.mqttClient.on('close', () => {
@@ -37,8 +41,12 @@ class MqttHandler {
   }
 
   // Sends a mqtt message to topic: mytopica
-  sendMessage(message) {
-    this.mqttClient.publish('mytopic', message);
+  sendMessage(topic, message) {
+    this.mqttClient.publish(topic, message);
+  }
+
+  getMessage(topic, message) {
+    this.mqttClient.on('message', (topic, message));
   }
 }
 
