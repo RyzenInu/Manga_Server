@@ -157,8 +157,6 @@ body>div>.section {
     height: 100%;
 }
 
-#topBar {}
-
 @media only screen and (max-width: 600px) {
     .section:nth-child(1) .sectionContent {
         flex-direction: column;
