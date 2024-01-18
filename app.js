@@ -12,7 +12,11 @@ app.use(express.static("./public"))
 app.set('view engine', 'ejs')
 app.set("views", "./views")
 
-const mqtt = new MqttHandler("mqtt://172.23.5.214", "manga_server", "pwdam", "pwdam");
+const mqtt = new MqttHandler(
+    (options.mqtt.protocol + options.mqtt.host),
+    options.mqtt.clientId,
+    options.mqtt.username,
+    options.mqtt.password);
 mqtt.connect();
 //mqtt.sendMessage("peltierControl", "ON");
 
@@ -23,7 +27,7 @@ app.get("/equipment", (req, res) => { res.render("equipment") })
 app.get("/stats", (req, res) => { res.render("stats") })
 app.get("/login", (req, res) => { res.render("login") })
 
-app.post("/user/:username/:password", requestHandlers.userLogin)
+//app.post("/user/:username/:password", requestHandlers.userLogin)
 
 app.listen(options.server.port, () => {
     console.log(`Server running on http://localhost:${options.server.port}/`);

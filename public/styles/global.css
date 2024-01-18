@@ -17,6 +17,8 @@
     --color-primary: #fff;
     --color-bg-main: #000;
     --color-bg-panel: #161616;
+    
+    --gradient-submit-button: linear-gradient(180deg, rgba(255, 73, 0, 0.20) 0%, #FF4900 100%);
 }
 
 * {
@@ -24,7 +26,7 @@
     color: var(--color-primary);
     font-family: Poppins, sans-serif;
     font-weight: bold;
-    transition: all .2s ease-in-out;
+    transition: all .15s ease-in-out;
 }
 
 body,
@@ -48,6 +50,9 @@ body {
     border-radius: 20px;
     background: linear-gradient(10deg, rgba(255, 255, 255, 0.35), var(--color-bg-panel) 20%, var(--color-bg-panel) 80%, rgba(255, 255, 255, 0.35));
     padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .panel>.panelBackground {

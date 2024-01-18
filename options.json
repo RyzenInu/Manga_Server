@@ -7,5 +7,12 @@
         "database": "",
         "username": "",
         "password": ""
-    }   
+    },
+    "mqtt":{
+        "protocol": "mqtt://",
+        "host": "172.23.5.214",
+        "clientId": "manga_server",
+        "username": "pwdam",
+        "password": "pwdam"
+    }
 }

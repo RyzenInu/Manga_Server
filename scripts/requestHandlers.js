@@ -2,6 +2,8 @@ const createUser = () => {
     
 }
 
-const userLogin
+const userLogin = () => {
+    
+}
 
 module.exports.createUser = createUser;
