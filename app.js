@@ -28,7 +28,8 @@ app.get("/stats", (req, res) => { res.render("stats") })
 app.get("/login", (req, res) => { res.render("login") })
 app.get("/register", (req, res) => { res.render("register") })
 
-//app.post("/user/", requestHandlers.userLogin)
+//app.post("/user/login/", requestHandlers.userLogin)
+//app.put("/user/create/", requestHandlers.userCreate)
 
 app.listen(options.server.port, () => {
     console.log(`Server running on http://localhost:${options.server.port}/`);
