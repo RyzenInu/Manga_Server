@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
+        <title>Register</title>
         <%- include('./head') %>
         <link rel="stylesheet" href="../styles/login_register.css">
     </head>
@@ -13,14 +13,19 @@
         <div class="panel loginPanel">
             <div class="panelBackground">
                 <div class="panelHeader">
-                    <div class="title">Login</div>
-                    <p class="subtitle">Don't have an account? <a href="/register">Register here</a></p>
+                    <div class="title">Register</div>
+                    <p class="subtitle">Already have an account? <a href="/login">Login here</a></p>
+                </div>
+                <div class="splitInputs">
+                    <input type="text" name="firstname" id="firstname" placeholder="First name">
+                    <input type="text" name="lastname" id="lastname" placeholder="Last name">
                 </div>
                 <input type="email" name="email" id="email" placeholder="E-mail">
                 <input type="password" name="password" id="password" placeholder="Password">
+                <input type="password" name="repeat_password" id="repeat_password" placeholder="Repeat password">
                 <div class="submitBtn" id="submitBtn">
-                    Continue
-                    <span class="material-symbols-rounded">login</span>
+                    Create Account
+                    <span class="material-symbols-rounded">person_add</span>
                 </div>
             </div>
             <div class="bgImg">

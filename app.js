@@ -26,8 +26,9 @@ app.get("/home", (req, res) => { res.render("home") })
 app.get("/equipment", (req, res) => { res.render("equipment") })
 app.get("/stats", (req, res) => { res.render("stats") })
 app.get("/login", (req, res) => { res.render("login") })
+app.get("/register", (req, res) => { res.render("register") })
 
-app.post("/user/", requestHandlers.userLogin)
+//app.post("/user/", requestHandlers.userLogin)
 
 app.listen(options.server.port, () => {
     console.log(`Server running on http://localhost:${options.server.port}/`);

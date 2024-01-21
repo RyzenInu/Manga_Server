@@ -15,9 +15,11 @@
     --color-manga-orangy: #FFAF00;
     --color-manga-green: #ABC600;
     --color-primary: #fff;
+    --color-primary-50: rgba(255, 255, 255, 0.5);
     --color-bg-main: #000;
     --color-bg-panel: #161616;
     
+    --gradient-manga: linear-gradient(0deg, var(--color-manga-redish), var(--color-manga-orangy), var(--color-manga-green));
     --gradient-submit-button: linear-gradient(180deg, rgba(255, 73, 0, 0.20) 0%, #FF4900 100%);
 }
 
@@ -29,12 +31,17 @@
     transition: all .15s ease-in-out;
 }
 
+*::selection{
+    background-color: var(--color-manga-redish);
+    color: white;
+}
+
 body,
 html {
     width: 100%;
     height: 100%;
     margin: 0;
-    background: var(--color-bg-main);
+    background: #000;
     background-color: var(--color-bg-main);
 }
 
