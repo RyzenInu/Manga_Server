@@ -16,7 +16,9 @@ const mqtt = new MqttHandler(
     (options.mqtt.protocol + options.mqtt.host),
     options.mqtt.clientId,
     options.mqtt.username,
-    options.mqtt.password);
+    options.mqtt.password
+);
+
 mqtt.connect();
 //mqtt.sendMessage("peltierControl", "ON");
 
