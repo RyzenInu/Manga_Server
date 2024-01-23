@@ -1,9 +1,10 @@
-const createUser = () => {
+const userCreate = () => {
     
 }
 
-const userLogin = () => {
-    
+const userLogin = (req, res) => {
+    res.sendStatus(200);
 }
 
-module.exports.createUser = createUser;
+module.exports.userCreate = userCreate;
+module.exports.userLogin = userLogin;
