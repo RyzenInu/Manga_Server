@@ -4,9 +4,11 @@
     },
     "database":{
         "host": "localhost",
-        "database": "",
-        "username": "",
-        "password": ""
+        "database": "manga_lab",
+        "username": "manga",
+        "password": "pwdam",
+        "port": 3306,
+        "multipleStatements": true
     },
     "mqtt":{
         "protocol": "mqtt://",
