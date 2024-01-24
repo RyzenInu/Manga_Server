@@ -28,11 +28,12 @@ userProfile.addEventListener("click", (e) => {
     /*userProfile.style.position = "absolute";
     userProfile.style.top = pos.top + "px";
     userProfile.style.left = pos.left + "px";
-
+ 
     userProfile.style.transform = "translate(-50%, -50%)";
     userProfile.style.top = "50%";
     userProfile.style.left = "50%";*/
 })
+
 
 var userPopupCloseBtn = document.getElementById("userPopupCloseBtn");
 
