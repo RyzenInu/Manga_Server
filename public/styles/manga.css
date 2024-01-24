@@ -43,6 +43,7 @@ body>div>.section {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-size: large;
 }
 
 .section:nth-child(odd) {
@@ -54,11 +55,15 @@ body>div>.section {
     max-width: 100%;
 }
 
+.section:nth-child(1) {
+    position: relative;
+}
+
 .section:nth-child(1) .paragraph {
     color: white;
     text-align: justify;
     text-justify: inter-word;
-    flex: 2;
+    flex: 3;
     margin: 0;
 }
 
@@ -67,9 +72,10 @@ body>div>.section {
     justify-content: center;
     align-items: center;
     flex: 1;
+    max-width: fit-content;
 }
 
-.sectionContent {
+.section:nth-child(1) .sectionContent {
     display: flex;
     flex-direction: row;
     padding: 5em 5em;
@@ -78,6 +84,54 @@ body>div>.section {
     gap: 1em;
     flex: 1;
     min-height: 0;
+    max-width: 80%;
+}
+
+.section:nth-child(2) .sectionContent {
+    width: 80%;
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+.title{
+    font-size: xx-large;
+}
+
+#teamContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+    column-gap: 8em;
+}
+
+.teamimg{
+    aspect-ratio: 1/1;
+    width: 12em;
+    background: black;
+    overflow: hidden;
+    border-radius: 999px;
+    justify-self: center;
+    padding: 6pt;
+}
+
+.teamImg img{
+    width: 100%;
+    border-radius: 999px;
+}
+
+.teamDesc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.teamDescRole{
+    font-weight: 400;
 }
 
 #nextSectionIndicator,
@@ -92,6 +146,9 @@ body>div>.section {
     mix-blend-mode: difference;
     font-size: 12pt;
     z-index: 1;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
 }
 
 #nextSectionIndicator {
@@ -130,23 +187,36 @@ body>div>.section {
 
 #topBar {
     width: 100%;
-    height: 4em;
+    height: 4.5em;
     padding: .5em;
-    background: white;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     flex: 0 0 1;
     z-index: 1;
+    position: absolute;
+    top: 0;
 }
 
 #btnLabManager {
     height: 100%;
     width: min-content;
-    padding: .5em;
-    background-color: black;
-    border-radius: 5px;
+    padding: .5em .5em .5em 1.5em;
+    background-color: white;
+    border-radius: 999px;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5em;
+}
+
+#btnLabManager #btnLabManagerIcon{
+    aspect-ratio: 1/1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #btnLabManager:hover {
@@ -162,6 +232,7 @@ body>div>.section {
         flex-direction: column;
         max-height: 100%;
         padding: 1em;
+        max-width: 100%;
     }
 
     .section:nth-child(1) .sectionContent #imgContainer {
@@ -171,5 +242,10 @@ body>div>.section {
     .section:nth-child(1)>img {
         max-height: 20%;
         content: url("../images/logoH.png");
+    }
+
+    #topBar{
+        position: initial;
+        justify-content: center;
     }
 }

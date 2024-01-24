@@ -19,7 +19,7 @@
     --color-bg-main: #000;
     --color-bg-panel: #161616;
     
-    --gradient-manga: linear-gradient(0deg, var(--color-manga-redish), var(--color-manga-orangy), var(--color-manga-green));
+    --gradient-manga: linear-gradient(45deg, var(--color-manga-redish), var(--color-manga-orangy), var(--color-manga-green));
     --gradient-submit-button: linear-gradient(180deg, rgba(255, 73, 0, 0.20) 0%, #FF4900 100%);
 }
 
