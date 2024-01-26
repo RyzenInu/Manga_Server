@@ -1,7 +1,7 @@
 const mysql = require('mysql')
 const options = require('../options.json')
 
-const userCreate = () => {
+const userCreate = (req, res) => {
     let register = req.body;
     let firstname = register.firstname;
     let lastname = register.lastname;
@@ -19,37 +19,43 @@ const userCreate = () => {
             select email, nome_utilizador from login 
             inner join login_utilizador on login.id_login = login_utilizador.id_login 
             inner join utilizador on login_utilizador.id_utilizador = utilizador.id_utilizador
-            where email = '${email}' or nome_utilizador = '${username}'
-        `, async (err, result) => {
+            where email = '${email}' or nome_utilizador = '${username}'`, (err, result) => {
             if (err) {
-                res.json({ error: err.message })
-                console.log(err.message)
+                res.json({ registered: false, error: err.message })
+                con.end();
             } else if (result.length === 0) {
-                let queryUser = mysql.format(`insert into utilizador (nome, apelido, email, id_laboratorio) values(?,?,?,1)`, [firstname, lastname, email]);
+                let queryUser = mysql.format(`insert into utilizador (nome, apelido, email, id_lab) values(?,?,?,1)`, [firstname, lastname, email]);
                 con.query(queryUser, (err, results) => {
-                    if (err) res.json({ error: err.message })
+                    if (err) {
+                        res.json({ registered: false, error: err.message });
+                        con.end();
+                    }
                     else {
                         userId = results.insertId;
                         let queryLogin = mysql.format(`insert into login (nome_utilizador, pass_word) values (?,?);`, [username, password]);
                         con.query(queryLogin, (err, results) => {
-                            if (err) res.json({ error: err.message })
+                            if (err) {
+                                res.json({ registered: false, error: err.message, query: queryLogin })
+                                con.end();
+                            }
                             else {
                                 loginId = results.insertId;
                                 let queryLoginUser = mysql.format(`insert into login_utilizador (id_login, id_utilizador) values(?,?);`, [loginId, userId]);
                                 con.query(queryLoginUser, (err, results) => {
-                                    if (err) { res.json({ error: err.message }) }
+                                    if (err) { res.json({ registered: false, error: err.message }) }
                                     else {
                                         res.json({ registered: true });
                                     }
+                                    con.end();
                                 });
                             }
                         });
                     }
                 })
-            } else {
-
+            } else{
+                res.json({registered: false, error: "Account already exists."});
+                con.end();
             }
-            con.end();
         });
     }))
 }
@@ -65,11 +71,11 @@ const userLogin = (req, res) => {
         else {
             con.query(`select * from login where nome_utilizador = '${username}' and pass_word = '${password}'`, (err, result) => {
                 if (err) {
-                    res.json({ error: err.message })
+                    res.json({ logged: false, error: err.message })
                     console.log(err.message)
                 } else {
                     if (result.length === 0) {
-                        res.json({ logged: false });
+                        res.json({ logged: false, error: "No Login found with these credentials." });
                         console.log(result);
                     } else if (result.length === 1) {
                         let loginId = result[0].id_login;
