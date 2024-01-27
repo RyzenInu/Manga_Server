@@ -52,8 +52,8 @@ const userCreate = (req, res) => {
                         });
                     }
                 })
-            } else{
-                res.json({registered: false, error: "Account already exists."});
+            } else {
+                res.json({ registered: false, error: "Account already exists." });
                 con.end();
             }
         });
@@ -69,25 +69,26 @@ const userLogin = (req, res) => {
     con.connect((err => {
         if (err) res.json({ error: err.message })
         else {
-            con.query(`select * from login where nome_utilizador = '${username}' and pass_word = '${password}'`, (err, result) => {
+            let query = mysql.format(`select * from login where nome_utilizador = ? and pass_word = ?`, [username, password]);
+            con.query(query, (err, result) => {
                 if (err) {
                     res.json({ logged: false, error: err.message })
                     console.log(err.message)
+                    con.end();
                 } else {
                     if (result.length === 0) {
                         res.json({ logged: false, error: "No Login found with these credentials." });
-                        console.log(result);
                     } else if (result.length === 1) {
                         let loginId = result[0].id_login;
-                        let userId;
+
                         con.query(`select id_utilizador from login_utilizador where id_login = '${loginId}'`, (err, result) => {
                             if (err) {
-                                console.log(err.message)
+                                res.json({ logged: false, error: err.message })
+                                con.end();
                             } else {
-                                userId = result[0].id_utilizador;
+                                res.json({ logged: true, userId: result[0].id_utilizador })
                             }
                         })
-                        res.json({ logged: true, userId: userId })
                     }
                 }
                 con.end();
@@ -96,5 +97,38 @@ const userLogin = (req, res) => {
     }))
 }
 
+const userGet = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) res.json({ error: err.message })
+        else {
+            if (Number(req.params.id) != NaN) {
+                let query = mysql.format(`select utilizador.img, login.nome_utilizador as username, utilizador.nome as firstname, utilizador.apelido as lastname, utilizador.email, lab.nome as lab from utilizador inner join lab on utilizador.id_lab = lab.id_lab inner join login_utilizador on utilizador.id_utilizador = login_utilizador.id_utilizador inner join login on login.id_login = login_utilizador.id_login where utilizador.id_utilizador = ?;`, [req.params.id]);
+                con.query(query, (err, result) => {
+                    if (err) {
+                        res.json({ error: err.message })
+                        con.end();
+                    } else if (result.length > 0) {
+                        let user = result[0];
+                        res.json({
+                            username: user.username,
+                            firstname: user.firstname,
+                            lastname: user.lastname,
+                            email: user.email,
+                            lab: user.lab,
+                            img: user.img
+                        })
+                    }
+                    con.end();
+                })
+            } else {
+                res.json({ error: "Failed to get user data: ID is NaN."});
+                con.end();
+            }
+        }
+    }))
+}
+
 module.exports.userCreate = userCreate;
 module.exports.userLogin = userLogin;
+module.exports.userGet = userGet;

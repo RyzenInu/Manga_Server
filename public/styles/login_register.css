@@ -53,7 +53,7 @@ input, .submitBtn{
 }
 
 input{
-    background-color: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.25);
     backdrop-filter: blur(15px);
     border: none;
     border-radius: 10px;
@@ -63,9 +63,12 @@ input{
 }
 
 input:focus{
+    border-bottom: 3px solid white;
     border: none;
     outline: none;
 }
+
+
 
 .bgImg{
     width: 100%;

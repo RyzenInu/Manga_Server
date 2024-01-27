@@ -21,22 +21,51 @@
             Statistics
         </div>
         <div class="navbar-user" id="navbar-user">
-            <p>Username</p>
+            <p id="profileBtnName"></p>
             <div class="user-img">
-                <img src="./images/amogus-gif.gif" alt="">
+                <img id="profileBtnImg" src=""
+                    onerror="this.onerror=null; this.src='../images/person_FILL0_wght400_GRAD0_opsz24.svg'">
             </div>
         </div>
     </div>
 </div>
 <div id="userPopup" class="panel">
     <div class="panelBackground">
-        <div class="panelHeader">
-            <p class="panelTitle">test</p>
-            <span id="userPopupCloseBtn" class="material-symbols-rounded">
+        <div id="userPopupContent">
+            <div id="userPopupImgContainer">
+                <img id="userPopupImg" src=""
+                    onerror="this.onerror=null; this.src='../images/person_FILL0_wght400_GRAD0_opsz24.svg'">
+            </div>
+            <div id="userPopupInfoContainer">
+                <div id="userInfoName">
+                    <p id="userPopupName">Firstname Lastname</p>
+                    <p id="userPopupUsername">Username</p>
+                </div>
+                <div class="userInfoRow">
+                    <span class="material-symbols-rounded">email</span>
+                    <p id="userPopupEmail">example@test.com</p>
+                </div>
+                <div class="userInfoRow">
+                    <span class="material-symbols-rounded">science</span>
+                    <p id="userPopupLab">Lab</p>
+                </div>
+                <div id="userInfoButtons">
+                    <div class="button" id="btnEditProfile">
+                        <span class="material-symbols-rounded">edit_square</span>
+                        Edit Profile
+                    </div>
+                    <div class="button" id="btnLogout">
+                        <span class="material-symbols-rounded">logout</span>
+                        Logout
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="userPopupCloseBtn">
+            <span class="material-symbols-rounded">
                 cancel
             </span>
         </div>
-        <!--<div class="panelH-line"></div>-->
     </div>
 </div>
 <div id="blurBg">

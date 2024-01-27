@@ -1,28 +1,39 @@
+if (localStorage.getItem("userId")) {
+    window.location.href = "/home";
+}
+
 let serverIP = "localhost";
 let url = `http://${serverIP}:2000/user/login`;
 let btnLogin = document.getElementById("submitBtn");
 
 btnLogin.addEventListener("click", (e) => {
-    console.log("clicked");
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
+    let body;
 
-    let body = {
-        username: username,
-        password: password
+    if (username != "", password != "") {
+        body = {
+            username: username,
+            password: password
+        }
+    } else {
+        alert("Username and password fields cannot be empty.")
+        return;
     }
+
 
     fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json", },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     })
         .then(response => response.json())
         .then(json => {
             if (json.logged === true) {
-                localStorage.setItem("userId", json.userId)
+                console.log(json);
+                localStorage.setItem("userId", JSON.parse(json.userId))
                 window.location.href = "/home"
-            } else if (json.registered === false) {
+            } else if (json.logged === false) {
                 alert(json.error)
             }
         })
