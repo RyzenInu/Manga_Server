@@ -44,6 +44,20 @@ async function loadProfile() { // This function will GET and load all user data.
         profileBtnImg.src = "../images/" + img;
         userPopupImg.src = "../images/" + img;
     }
+
+    let inputFirstname = document.getElementById("firstname");
+    let inputLastname = document.getElementById("lastname");
+    let inputUsername = document.getElementById("username");
+    let inputEmail = document.getElementById("email");
+    let inputPassword = document.getElementById("password");
+    let inputRepeatPassword = document.getElementById("repeatPassword");
+
+    inputFirstname.value = firstname;
+    inputLastname.value = lastname;
+    inputUsername.value = username;
+    inputEmail.value = email;
+    inputPassword.value = "";
+    inputRepeatPassword.value = "";
 }
 
 function setActiveBtn() {
@@ -101,7 +115,99 @@ function toggleBlurBg() {
 }
 
 let btnLogout = document.getElementById("btnLogout")
-btnLogout.addEventListener("click", (e) => { 
+btnLogout.addEventListener("click", (e) => {
     localStorage.clear();
     window.location.href = "/login";
 })
+
+let btnEditProfile = document.getElementById("btnEditProfile")
+btnEditProfile.addEventListener("click", (e) => {
+    toggleEditProfile();
+})
+
+let btnCancelUpdateProfile = document.getElementById("btnCancelUpdateProfile")
+btnCancelUpdateProfile.addEventListener("click", (e) => {
+    toggleEditProfile();
+})
+
+
+let userPopupInfoContainer = document.getElementById("userPopupInfoContainer");
+function toggleEditProfile() {
+    userPopupInfoContainer.classList.toggle("active")
+    userPopupEditContainer.classList.toggle("active")
+    uploadImgLabel.classList.toggle("active")
+}
+
+let btnUpdateProfile = document.getElementById("btnUpdateProfile")
+btnUpdateProfile.addEventListener("click", async (e) => {
+    if (confirm("Are you sure about these changes?")) {
+        let success = await updateProfile();
+        console.log(success);
+        if (success == true) {
+            loadProfile();
+            toggleEditProfile();
+        } else {
+            return;
+        }
+    } else {
+        loadProfile();
+    }
+})
+
+const validateEmail = (email) => {
+    return String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+};
+
+async function updateProfile() {
+    let inputFirstname = document.getElementById("firstname").value;
+    let inputLastname = document.getElementById("lastname").value;
+    let inputUsername = document.getElementById("username").value;
+    let inputEmail = document.getElementById("email").value;
+    let inputPassword = document.getElementById("password").value;
+    let inputRepeatPassword = document.getElementById("repeatPassword").value;
+    let body;
+
+    if (inputFirstname != "" && inputLastname != "" && inputUsername != "" && inputEmail != "" && inputPassword != "" && inputRepeatPassword != "") {
+        if (inputPassword != inputRepeatPassword) {
+            alert("Passwords do not match.")
+            return false;
+        } else if (!validateEmail(inputEmail)) {
+            alert("Invalid Email.")
+            return false;
+        } else {
+            body = {
+                firstname: inputFirstname,
+                lastname: inputLastname,
+                email: inputEmail,
+                username: inputUsername,
+                password: inputPassword
+            }
+        }
+    } else {
+        alert("All fields are mandatory.")
+        return false;
+    }
+
+    let success = await fetch(url + "user/update/" + localStorage.getItem("userId"), {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", },
+        body: JSON.stringify(body)
+    })
+        .then(response => response.json())
+        .then(json => {
+            if (json.updated === true) {
+                alert("Successfully updated")
+                return true;
+            } else if (json.updated === false) {
+                return false;
+                try {
+                    alert(json.error)
+                } catch (e) { }
+            }
+        })
+    return success;
+}

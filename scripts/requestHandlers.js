@@ -60,6 +60,66 @@ const userCreate = (req, res) => {
     }))
 }
 
+const userUpdate = (req, res) => {
+    let update = req.body;
+    let firstname = update.firstname;
+    let lastname = update.lastname;
+    let username = update.username;
+    let email = update.email;
+    let password = update.password;
+
+    let loginId;
+    let userId = parseInt(req.params.id);
+
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) res.json({ error: err.message, updated: false })
+        else {
+            let queryGetLoginId = mysql.format(`select id_login from login_utilizador where id_utilizador = ?`, [userId]);
+            con.query(queryGetLoginId, (err, result) => {
+                if (err) {
+                    res.json({ error: err.message, updated: false })
+                    con.end();
+                    return;
+                } else if (result.length === 1) {
+                    loginId = result[0].id_login;
+
+                    let queryUpdateLogin = mysql.format(`
+                        update login
+                        set nome_utilizador = ?, pass_word = ?
+                        where id_login = ?
+                        `, [username, password, loginId]);
+                    con.query(queryUpdateLogin, (err, result) => {
+                        if (err) {
+                            res.json({ error: err.message, updated: false })
+                            con.end();
+                            return;
+                        } else {
+                            let queryUpdateLogin = mysql.format(`
+                                update utilizador
+                                set nome = ?, apelido = ?, email = ?
+                                where id_utilizador = ?
+                                `, [firstname, lastname, email, userId]);
+                            con.query(queryUpdateLogin, (err, result) => {
+                                if (err) {
+                                    res.json({ error: err.message, updated: false })
+                                    con.end();
+                                    return;
+                                } else { 
+                                    res.json({updated: true})
+                                }
+                            });
+                    }})
+                } else {
+                    res.json({ error: "Couldn't get login for this user." })
+                    con.end();
+                    return;
+                }
+            });
+        }
+    }))
+}
+
 const userLogin = (req, res) => {
     let login = req.body;
     let username = login.username;
@@ -122,7 +182,7 @@ const userGet = (req, res) => {
                     con.end();
                 })
             } else {
-                res.json({ error: "Failed to get user data: ID is NaN."});
+                res.json({ error: "Failed to get user data: ID is NaN." });
                 con.end();
             }
         }
@@ -132,3 +192,4 @@ const userGet = (req, res) => {
 module.exports.userCreate = userCreate;
 module.exports.userLogin = userLogin;
 module.exports.userGet = userGet;
+module.exports.userUpdate = userUpdate;

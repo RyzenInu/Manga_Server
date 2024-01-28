@@ -1,24 +1,26 @@
 <div class="navbar-container panel">
     <div class="navbar-background panelBackground">
         <img id="mangaLogo" src="./images/lab_manager_logo_horizontal.png" onclick="location.href='/manga';">
-        <div style="background-color: white; height: 1.75em; width: 3px; border-radius: 3px;"></div>
-        <div class="navbar-button" onclick="location.href='/home';">
-            <span class="material-symbols-rounded">
-                cottage
-            </span>
-            Home
-        </div>
-        <div class="navbar-button" onclick="location.href='/equipment';">
-            <span class="material-symbols-rounded">
-                science
-            </span>
-            Equipment
-        </div>
-        <div class="navbar-button" onclick="location.href='/stats';">
-            <span class="material-symbols-rounded">
-                show_chart
-            </span>
-            Statistics
+        <div class="navbarVerticalSeparator" style="background-color: white; height: 1.75em; width: 3px; border-radius: 3px;"></div>
+        <div id="navbarButtons">
+            <div class="navbar-button" onclick="location.href='/home';">
+                <span class="material-symbols-rounded">
+                    cottage
+                </span>
+                Home
+            </div>
+            <div class="navbar-button" onclick="location.href='/equipment';">
+                <span class="material-symbols-rounded">
+                    science
+                </span>
+                Equipment
+            </div>
+            <div class="navbar-button" onclick="location.href='/stats';">
+                <span class="material-symbols-rounded">
+                    show_chart
+                </span>
+                Statistics
+            </div>
         </div>
         <div class="navbar-user" id="navbar-user">
             <p id="profileBtnName"></p>
@@ -30,13 +32,22 @@
     </div>
 </div>
 <div id="userPopup" class="panel">
-    <div class="panelBackground">
+    <div class="panelBackground" id="userPopupBackground">
         <div id="userPopupContent">
-            <div id="userPopupImgContainer">
-                <img id="userPopupImg" src=""
-                    onerror="this.onerror=null; this.src='../images/person_FILL0_wght400_GRAD0_opsz24.svg'">
+            <div id="userPopupLeft">
+                <div id="userPopupImgContainer">
+                    <img id="userPopupImg" src=""
+                        onerror="this.onerror=null; this.src='../images/person_FILL0_wght400_GRAD0_opsz24.svg'">
+                </div>
+                <div id="userPopupUploadImgContainer">
+                    <label id="uploadImgLabel" class="button" for="uploadImg">
+                        <span class="material-symbols-rounded">upload</span>
+                        Upload Image
+                    </label>
+                    <input type="file" name="uploadImg" id="uploadImg" style="display: none;" accept=".gif,.jpg,.jpeg,.png">
+                </div>
             </div>
-            <div id="userPopupInfoContainer">
+            <div id="userPopupInfoContainer" class="active">
                 <div id="userInfoName">
                     <p id="userPopupName">Firstname Lastname</p>
                     <p id="userPopupUsername">Username</p>
@@ -54,9 +65,44 @@
                         <span class="material-symbols-rounded">edit_square</span>
                         Edit Profile
                     </div>
-                    <div class="button" id="btnLogout">
+                    <div class="button btnRed" id="btnLogout">
                         <span class="material-symbols-rounded">logout</span>
                         Logout
+                    </div>
+                </div>
+            </div>
+            <div id="userPopupEditContainer">
+                <div class="userEditInputRow">
+                    <p class="userEditInputLabel">First and Last name</p>
+                    <div class="userEditRow">
+                        <input type="text" name="firstname" id="firstname" placeholder="First name" autocomplete="off">
+                        <input type="text" name="lastname" id="lastname" placeholder="Last name" autocomplete="off">
+                    </div>
+                </div>
+                <div class="userEditInputRow">
+                    <p class="userEditInputLabel">Username</p>
+                    <input type="text" name="username" id="username" placeholder="Username" autocomplete="off">
+                </div>
+                <div class="userEditInputRow">
+                    <p class="userEditInputLabel">E-mail</p>
+                    <input type="email" name="email" id="email" placeholder="E-mail" autocomplete="off">
+                </div>
+                <div class="userEditInputRow">
+                    <p class="userEditInputLabel">Password</p>
+                    <input type="password" name="password" id="password" placeholder="Password" autocomplete="off">
+                </div>
+                <div class="userEditInputRow">
+                    <p class="userEditInputLabel">Repeat Password</p>
+                    <input type="password" name="repeatPassword" id="repeatPassword" placeholder="Repeat Password" autocomplete="off">
+                </div>
+                <div class="userEditRow">
+                    <div id="btnUpdateProfile" class="button">
+                        <span class="material-symbols-rounded">save</span>
+                        Save
+                    </div>
+                    <div id="btnCancelUpdateProfile" class="button btnRed">
+                        <span class="material-symbols-rounded">backspace</span>
+                        Cancel
                     </div>
                 </div>
             </div>

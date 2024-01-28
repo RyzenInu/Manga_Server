@@ -32,7 +32,8 @@ app.get("/register", (req, res) => { res.render("register") })
 
 app.get("/user/:id/", requestHandlers.userGet);
 app.post("/user/login/", requestHandlers.userLogin)
-app.put("/user/create/", requestHandlers.userCreate)
+app.post("/user/create/", requestHandlers.userCreate)
+app.put("/user/update/:id", requestHandlers.userUpdate)
 
 app.listen(options.server.port, () => {
     console.log(`Server running on http://localhost:${options.server.port}/`);

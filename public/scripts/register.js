@@ -1,5 +1,5 @@
 let serverIP = "localhost";
-let url = `http://${serverIP}:2000/user/create`;
+let url = `http://${serverIP}:2000/`;
 let btnRegister = document.getElementById("submitBtn");
 
 const validateEmail = (email) => {
@@ -41,8 +41,8 @@ btnRegister.addEventListener("click", (e) => {
     }
 
 
-    fetch(url, {
-        method: "PUT",
+    fetch(url + "user/create", {
+        method: "POST",
         headers: { "Content-Type": "application/json", },
         body: JSON.stringify(body)
     })
