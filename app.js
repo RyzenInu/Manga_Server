@@ -4,10 +4,15 @@ const bodyParser = require("body-parser")
 const app = express()
 const MqttHandler = require("./scripts/mqttHandler");
 const options = require("./options.json");
+const busboy = require('connect-busboy');
+const path = require('path');
+const fs = require('fs');
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static("./public"))
+
+app.use(busboy());
 
 app.set('view engine', 'ejs')
 app.set("views", "./views")
@@ -34,6 +39,26 @@ app.get("/user/:id/", requestHandlers.userGet);
 app.post("/user/login/", requestHandlers.userLogin)
 app.post("/user/create/", requestHandlers.userCreate)
 app.put("/user/update/:id", requestHandlers.userUpdate)
+app.post("/user/image/", (req, res) => {
+    console.log(req);
+    req.pipe(req.busboy); // Pipe it trough busboy
+
+    req.busboy.on('file', (fieldname, file, info) => {
+        console.log(`Upload of '${info.filename}' started`);
+
+        console.log();
+        // Create a write stream of the new file
+        const fstream = fs.createWriteStream(path.join(__dirname + "\\public\\images\\users\\", info.filename));
+        // Pipe it trough
+        file.pipe(fstream);
+
+        // On finish of the upload
+        fstream.on('close', () => {
+            console.log(`Upload of '${info.filename}' finished`);
+            res.redirect('back');
+        });
+    });
+})
 
 app.listen(options.server.port, () => {
     console.log(`Server running on http://localhost:${options.server.port}/`);

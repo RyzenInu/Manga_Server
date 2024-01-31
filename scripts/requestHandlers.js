@@ -1,4 +1,8 @@
 const mysql = require('mysql')
+const busboy = require('connect-busboy')
+var path = require('path')
+var fs = require('fs')
+const bodyParser = require("body-parser")
 const options = require('../options.json')
 
 const userCreate = (req, res) => {
@@ -67,6 +71,7 @@ const userUpdate = (req, res) => {
     let username = update.username;
     let email = update.email;
     let password = update.password;
+    let img = update.img;
 
     let loginId;
     let userId = parseInt(req.params.id);
@@ -97,19 +102,20 @@ const userUpdate = (req, res) => {
                         } else {
                             let queryUpdateLogin = mysql.format(`
                                 update utilizador
-                                set nome = ?, apelido = ?, email = ?
+                                set nome = ?, apelido = ?, email = ?, img = ?
                                 where id_utilizador = ?
-                                `, [firstname, lastname, email, userId]);
+                                `, [firstname, lastname, email, img, userId]);
                             con.query(queryUpdateLogin, (err, result) => {
                                 if (err) {
                                     res.json({ error: err.message, updated: false })
                                     con.end();
                                     return;
-                                } else { 
-                                    res.json({updated: true})
+                                } else {
+                                    res.json({ updated: true })
                                 }
                             });
-                    }})
+                        }
+                    })
                 } else {
                     res.json({ error: "Couldn't get login for this user." })
                     con.end();
@@ -189,7 +195,30 @@ const userGet = (req, res) => {
     }))
 }
 
+const uploadPath = '../public/images/users/';
+
+const userUploadImg = (req, res) => {
+    console.log(req);
+    req.pipe(req.busboy); // Pipe it trough busboy
+
+    req.busboy.on('file', (fieldname, file, filename) => {
+        console.log(`Upload of '${filename}' started`);
+
+        // Create a write stream of the new file
+        const fstream = fs.createWriteStream(path.join(uploadPath, filename));
+        // Pipe it trough
+        file.pipe(fstream);
+
+        // On finish of the upload
+        fstream.on('close', () => {
+            console.log(`Upload of '${filename}' finished`);
+            res.redirect('back');
+        });
+    });
+}
+
 module.exports.userCreate = userCreate;
 module.exports.userLogin = userLogin;
 module.exports.userGet = userGet;
 module.exports.userUpdate = userUpdate;
+module.exports.userUploadImg = userUploadImg;

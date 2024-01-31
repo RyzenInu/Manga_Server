@@ -127,6 +127,7 @@ btnEditProfile.addEventListener("click", (e) => {
 
 let btnCancelUpdateProfile = document.getElementById("btnCancelUpdateProfile")
 btnCancelUpdateProfile.addEventListener("click", (e) => {
+    loadProfile();
     toggleEditProfile();
 })
 
@@ -142,7 +143,6 @@ let btnUpdateProfile = document.getElementById("btnUpdateProfile")
 btnUpdateProfile.addEventListener("click", async (e) => {
     if (confirm("Are you sure about these changes?")) {
         let success = await updateProfile();
-        console.log(success);
         if (success == true) {
             loadProfile();
             toggleEditProfile();
@@ -171,6 +171,17 @@ async function updateProfile() {
     let inputRepeatPassword = document.getElementById("repeatPassword").value;
     let body;
 
+    let prevImg = new URL(profileBtnImg.src).pathname.split("/").pop()
+    let img = "";
+
+    let [file] = uploadImg.files
+
+    if (file) {
+        img = file.name
+    } else {
+        img = prevImg
+    }
+
     if (inputFirstname != "" && inputLastname != "" && inputUsername != "" && inputEmail != "" && inputPassword != "" && inputRepeatPassword != "") {
         if (inputPassword != inputRepeatPassword) {
             alert("Passwords do not match.")
@@ -184,7 +195,8 @@ async function updateProfile() {
                 lastname: inputLastname,
                 email: inputEmail,
                 username: inputUsername,
-                password: inputPassword
+                password: inputPassword,
+                img: img
             }
         }
     } else {
@@ -210,4 +222,44 @@ async function updateProfile() {
             }
         })
     return success;
+}
+
+let uploadImg = document.getElementById("uploadImg")
+uploadImg.addEventListener("change", (e) => {
+    let [file] = uploadImg.files
+    if (file) {
+        userPopupImg.src = URL.createObjectURL(file)
+    }
+
+    //uploadUserImage()
+})
+
+function getFileExt(filename) {
+    return filename.substr(filename.indexOf('.'));
+    //return path.extname(filename);
+}
+
+function getMimeType(file_extension) {
+    switch (file_extension) {
+        case "jpg":
+            return ""
+            break;
+    }
+}
+
+function uploadUserImage() {
+    let [file] = uploadImg.files
+    console.log(file.type);
+
+    var data = new FormData()
+    data.append('file', file)
+
+    fetch(url + "user/image", {
+        method: "POST",
+        mode: "cors",
+        /*headers: {
+            "Content-Type": file.type,
+        },*/
+        body: data,
+    });
 }

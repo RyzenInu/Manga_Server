@@ -55,7 +55,7 @@ id_utilizador int auto_increment,
 nome varchar(100) not null,
 apelido varchar(100) not null,
 email varchar(100) not null,
-img varchar(100) not null default '',
+img varchar(1000) not null default '',
 id_lab int not null default 1,
 primary key(id_utilizador),
 foreign key (id_lab) references lab(id_lab)
