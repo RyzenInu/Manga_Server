@@ -206,7 +206,7 @@ const userUploadImg = (req, res) => {
     req.busboy.on('file', (fieldname, file, info) => {
         //console.log(`Upload of '${info.filename}' started`);
         //console.log(info)
-        while(username == undefined){
+        while (username == undefined) {
         }
         //console.log("username: " + username)
         // Create a write stream of the new file
@@ -223,6 +223,26 @@ const userUploadImg = (req, res) => {
     });
 }
 
+const usersGet = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) res.json({ error: err.message })
+        else {
+            let query = `select utilizador.img, utilizador.nome as firstname, utilizador.apelido as lastname, utilizador.email, lab.nome as lab from utilizador inner join lab on utilizador.id_lab = lab.id_lab inner join login_utilizador on utilizador.id_utilizador = login_utilizador.id_utilizador inner join login on login.id_login = login_utilizador.id_login;`;
+            con.query(query, (err, result) => {
+                if (err) {
+                    res.json({ error: err.message })
+                    con.end();
+                } else if (result.length > 0) {
+                    res.json(result)
+                }
+                con.end();
+            })
+        }
+    }))
+}
+
+module.exports.usersGet = usersGet;
 module.exports.userCreate = userCreate;
 module.exports.userLogin = userLogin;
 module.exports.userGet = userGet;

@@ -7,6 +7,7 @@ const options = require("./options.json");
 const busboy = require('connect-busboy');
 const path = require('path');
 const fs = require('fs');
+const { request, STATUS_CODES } = require("http");
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -25,9 +26,17 @@ const mqtt = new MqttHandler(
     options.mqtt.password
 );
 
-//mqtt.connect();
+// mqtt
+mqtt.connect();
+app.post("/mqtt/send/:topic/:message", (req, res) => {
+    let topic = req.params.topic;
+    let message = req.params.message;
+    mqtt.sendMessage(topic, message);
+    res.sendStatus(200);
+});
 //mqtt.sendMessage("peltierControl", "ON");
 
+// Page Routing
 app.get("/", (req, res) => { res.redirect("/manga") })
 app.get("/manga", (req, res) => { res.render("manga") })
 app.get("/home", (req, res) => { res.render("home") })
@@ -36,11 +45,14 @@ app.get("/stats", (req, res) => { res.render("stats") })
 app.get("/login", (req, res) => { res.render("login") })
 app.get("/register", (req, res) => { res.render("register") })
 
+// User
+app.get("/users/", requestHandlers.usersGet);
 app.get("/user/:id/", requestHandlers.userGet);
 app.post("/user/login/", requestHandlers.userLogin)
 app.post("/user/create/", requestHandlers.userCreate)
 app.put("/user/update/:id", requestHandlers.userUpdate)
 app.post("/user/image/", requestHandlers.userUploadImg)
+
 
 app.listen(options.server.port, () => {
     console.log(`Server running on http://localhost:${options.server.port}/`);

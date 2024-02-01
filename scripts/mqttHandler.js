@@ -24,12 +24,14 @@ class MqttHandler {
     });
 
     // mqtt subscriptions
-    this.mqttClient.subscribe('#', { qos: 0 });
+    this.mqttClient.subscribe('volume', { qos: 0 });
+    this.mqttClient.subscribe('temp', { qos: 0 });
 
     // When a message arrives, console.log it
     this.mqttClient.on('message', function (topic, message) {
+      console.log("Topic: " + topic + "\nMessage: " + message.toString());
       try {
-        console.log(JSON.parse(message.toString()));
+        let messageJson = JSON.parse(message.toString());
       } catch (e) {
         console.log(e);
       }

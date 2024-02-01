@@ -495,6 +495,12 @@ input[type="password"]:focus {
     outline: none;
 }
 
+.contentPanel{
+    background-color: var(--color-elem-over);
+    border-radius: 16px;
+    padding: 1em;
+}
+
 @media only screen and (max-width: 600px) {
     #userPopupContent {
         flex-direction: column;
@@ -549,3 +555,4 @@ input[type="password"]:focus {
         flex: 1;
     }
 }
+
