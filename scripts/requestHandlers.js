@@ -195,24 +195,30 @@ const userGet = (req, res) => {
     }))
 }
 
-const uploadPath = '../public/images/users/';
-
 const userUploadImg = (req, res) => {
-    console.log(req);
+    //console.log(req);
+    let username;
     req.pipe(req.busboy); // Pipe it trough busboy
-
-    req.busboy.on('file', (fieldname, file, filename) => {
-        console.log(`Upload of '${filename}' started`);
-
+    req.busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
+        //console.log("val: " + val)
+        username = val;
+    })
+    req.busboy.on('file', (fieldname, file, info) => {
+        //console.log(`Upload of '${info.filename}' started`);
+        //console.log(info)
+        while(username == undefined){
+        }
+        //console.log("username: " + username)
         // Create a write stream of the new file
-        const fstream = fs.createWriteStream(path.join(uploadPath, filename));
+        const fstream = fs.createWriteStream(path.join(__dirname, "..", "\\public\\images\\users\\", ("img_" + username + path.extname(info.filename)) /*info.filename)*/));
+
         // Pipe it trough
         file.pipe(fstream);
 
         // On finish of the upload
         fstream.on('close', () => {
-            console.log(`Upload of '${filename}' finished`);
-            res.redirect('back');
+            //console.log(`Upload of '${info.filename}' finished`);
+            res.json({});
         });
     });
 }

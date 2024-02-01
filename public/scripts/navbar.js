@@ -41,8 +41,9 @@ async function loadProfile() { // This function will GET and load all user data.
     let profileBtnImg = document.getElementById("profileBtnImg");
     let userPopupImg = document.getElementById("userPopupImg");
     if (img != "") {
-        profileBtnImg.src = "../images/" + img;
-        userPopupImg.src = "../images/" + img;
+        let imgSrc = "../images/users/" + img
+        profileBtnImg.src = imgSrc;
+        userPopupImg.src = imgSrc;
     }
 
     let inputFirstname = document.getElementById("firstname");
@@ -144,8 +145,8 @@ btnUpdateProfile.addEventListener("click", async (e) => {
     if (confirm("Are you sure about these changes?")) {
         let success = await updateProfile();
         if (success == true) {
-            loadProfile();
             toggleEditProfile();
+            loadProfile();
         } else {
             return;
         }
@@ -171,16 +172,18 @@ async function updateProfile() {
     let inputRepeatPassword = document.getElementById("repeatPassword").value;
     let body;
 
-    let prevImg = new URL(profileBtnImg.src).pathname.split("/").pop()
-    let img = "";
-
+    //let prevImg = new URL(profileBtnImg.src).pathname.split("/").pop()
     let [file] = uploadImg.files
+    let img = "img_" + inputUsername + "." + file.name.split('.').pop();
+    //console.log(img);
 
+    /*
     if (file) {
         img = file.name
     } else {
         img = prevImg
     }
+    */
 
     if (inputFirstname != "" && inputLastname != "" && inputUsername != "" && inputEmail != "" && inputPassword != "" && inputRepeatPassword != "") {
         if (inputPassword != inputRepeatPassword) {
@@ -213,12 +216,13 @@ async function updateProfile() {
         .then(json => {
             if (json.updated === true) {
                 alert("Successfully updated")
+                uploadUserImage(inputUsername)
                 return true;
             } else if (json.updated === false) {
-                return false;
                 try {
                     alert(json.error)
                 } catch (e) { }
+                return false;
             }
         })
     return success;
@@ -230,28 +234,14 @@ uploadImg.addEventListener("change", (e) => {
     if (file) {
         userPopupImg.src = URL.createObjectURL(file)
     }
-
-    //uploadUserImage()
 })
 
-function getFileExt(filename) {
-    return filename.substr(filename.indexOf('.'));
-    //return path.extname(filename);
-}
-
-function getMimeType(file_extension) {
-    switch (file_extension) {
-        case "jpg":
-            return ""
-            break;
-    }
-}
-
-function uploadUserImage() {
+function uploadUserImage(username) {
     let [file] = uploadImg.files
-    console.log(file.type);
+    //console.log(file.type);
 
     var data = new FormData()
+    data.append('username', username)
     data.append('file', file)
 
     fetch(url + "user/image", {
