@@ -242,9 +242,95 @@ const usersGet = (req, res) => {
     }))
 }
 
+const teamUsersGet = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) res.json({ error: err.message })
+        else {
+            let query = mysql.format("select id_lab from utilizador where id_utilizador = ?", [req.params.userid]);
+
+            let labId;
+            con.query(query, (err, result) => {
+                if (err) {
+                    res.json({ error: err.message })
+                    con.end();
+                } else if (result.length > 0) {
+                    labId = result[0].id_lab;
+
+                    query = mysql.format(`select utilizador.img, utilizador.nome as firstname, utilizador.apelido as lastname, utilizador.email, lab.nome as lab from utilizador inner join lab on utilizador.id_lab = lab.id_lab where utilizador.id_lab = ?`, [labId]);
+                    con.query(query, (err, result) => {
+                        if (err) {
+                            res.json({ error: err.message })
+                            con.end();
+                        } else if (result.length > 0) {
+                            res.json(result)
+                            con.end();
+                        } else {
+                            res.json({ error: "test" })
+                            con.end();
+                        }
+                    })
+                } else {
+                    res.json({ error: "Couldn't find user's team/lab" })
+                    con.end();
+                }
+            });
+        }
+    }))
+}
+
+const equipmentUserGet = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) res.json({ error: err.message })
+        else {
+            let query = mysql.format("select id_lab from utilizador where id_utilizador = ?", [req.params.userid])
+            con.query(query, (err, result) => {
+                if (err) res.json({ error: err.message })
+                else {
+                    let labId = result[0].id_lab
+                    query = mysql.format("select id_recipiente, nome from recipiente where id_lab = ?", [labId])
+                    con.query(query, (err, result) => {
+                        if (err) res.json({ error: err.message })
+                        else {
+                            res.json(result)
+                        }
+                    })
+                }
+            })
+        }
+    }));
+}
+
+const equipmentUserAdd = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) res.json({ error: err.message })
+        else {
+            let query = mysql.format("select id_lab from utilizador where id_utilizador = ?", [req.params.userid])
+            con.query(query, (err, result) => {
+                if (err) res.json({ error: err.message })
+                else {
+                    let labId = result[0].id_lab
+                    query = mysql.format("insert into recipiente (nome, mac_address, id_lab) values(?,?,?)", [req.body.name, req.body.mac, labId])
+                    con.query(query, (err, result) => {
+                        if (err) res.json({ error: err.message })
+                        else {
+                            res.json()
+                        }
+                    })
+                }
+            })
+        }
+    }))
+}
+
 module.exports.usersGet = usersGet;
 module.exports.userCreate = userCreate;
 module.exports.userLogin = userLogin;
 module.exports.userGet = userGet;
 module.exports.userUpdate = userUpdate;
 module.exports.userUploadImg = userUploadImg;
+module.exports.teamUsersGet = teamUsersGet;
+module.exports.equipmentUserGet = equipmentUserGet;
+module.exports.equipmentUserAdd = equipmentUserAdd;

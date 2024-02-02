@@ -52,6 +52,11 @@ app.post("/user/login/", requestHandlers.userLogin)
 app.post("/user/create/", requestHandlers.userCreate)
 app.put("/user/update/:id", requestHandlers.userUpdate)
 app.post("/user/image/", requestHandlers.userUploadImg)
+app.get("/team/users/:userid", requestHandlers.teamUsersGet)
+
+// Equipment
+app.get("/equipment/user/:userid", requestHandlers.equipmentUserGet)
+app.post("/equipment/user/add/:userid", requestHandlers.equipmentUserGet)
 
 
 app.listen(options.server.port, () => {
