@@ -174,7 +174,7 @@ const userGet = (req, res) => {
                     if (err) {
                         res.json({ error: err.message })
                         con.end();
-                    } else if (result.length > 0) {
+                    } else if (result.length == 1) {
                         let user = result[0];
                         res.json({
                             username: user.username,
@@ -184,6 +184,8 @@ const userGet = (req, res) => {
                             lab: user.lab,
                             img: user.img
                         })
+                    } else{
+                        res.json({error: "No user found with that ID."})
                     }
                     con.end();
                 })
@@ -235,6 +237,8 @@ const usersGet = (req, res) => {
                     con.end();
                 } else if (result.length > 0) {
                     res.json(result)
+                } else{
+                    res.json({error: "Could not retrieve users from the database."})
                 }
                 con.end();
             })

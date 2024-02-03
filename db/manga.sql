@@ -28,6 +28,7 @@ primary key (id_lab)
 CREATE TABLE IF NOT EXISTS recipiente(
 id_recipiente int auto_increment not null,
 nome varchar(100) not null,
+mac_address varchar(17) not null,
 id_lab int not null,
 primary key (id_recipiente),
 foreign key (id_lab) references lab(id_lab)
@@ -36,17 +37,17 @@ foreign key (id_lab) references lab(id_lab)
 CREATE TABLE IF NOT EXISTS temp(
 id_sensor_temp int auto_increment,
 nome varchar(100) not null,
-valores varchar(100) not null,
+valor varchar(100) not null,
 id_recipiente int not null,
 primary key (id_sensor_temp),
 foreign key (id_recipiente) references recipiente(id_recipiente)
 );
 
-CREATE TABLE IF NOT EXISTS sensorNivel(
-id_sensor_nivel int auto_increment,
-valores varchar(100) not null,
+CREATE TABLE IF NOT EXISTS volume(
+id_volume int auto_increment,
+valor varchar(100) not null,
 id_recipiente int not null,
-primary key (id_sensor_nivel),
+primary key (id_volume),
 foreign key (id_recipiente) references recipiente(id_recipiente)
 );
 

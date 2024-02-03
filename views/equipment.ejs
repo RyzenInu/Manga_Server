@@ -18,9 +18,31 @@
                     <div class="panelTitle">Devices</div>
                 </div>
                 <div class="contentPanel equipmentPanel"></div>
-                <div class="button" id="addEquipment">
+                <div class="" id="btnAddDevice">
                     <div>Add new device</div>
                     <span class="material-symbols-rounded">add</span>
+                </div>
+            </div>
+        </div>
+        <div id="equipmentPopup" class="panel">
+            <div class="panelBackground">
+                <div class="inputRow">
+                    <label for="deviceName">Name</label>
+                    <input type="text" name="deviceName" id="deviceName" placeholder="1A:2B:3C:4D">
+                </div>
+                <div class="inputRow">
+                    <label for="deviceMac">Mac Address</label>
+                    <input type="text" name="deviceMac" id="deviceMac" placeholder="1A:2B:3C:4D">
+                </div>
+                <div class="btnRow">
+                    <div id="btnConfirmAddDevice" class="button">
+                        <span class="material-symbols-rounded">add</span>
+                        Add new device
+                    </div>
+                    <div id="btnCancelAddDevice" class="button btnRed">
+                        <span class="material-symbols-rounded">backspace</span>
+                        Cancel
+                    </div>
                 </div>
             </div>
         </div>

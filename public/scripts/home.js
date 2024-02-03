@@ -27,7 +27,11 @@ async function loadTeam() {
                 teamUserImg.classList.add("teamUserImg")
     
                 let img = document.createElement("img");
-                img.onerror = "this.onerror=null; this.src='../images/person_FILL0_wght400_GRAD0_opsz24.svg'"
+                img.addEventListener("error", (event) => {
+                    event.target.onerror=null; 
+                    event.target.src='../images/person_FILL0_wght400_GRAD0_opsz24.svg';
+                })
+                    
                 img.src = url + "/images/users/" + user.img
     
                 let teamUserName = document.createElement("div");
