@@ -1,0 +1,17 @@
+.panelBackground {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.splitVertical{
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    flex: 1;
+}
+
+.statsPanel{
+    flex: 1;
+    height: 100%;
+}

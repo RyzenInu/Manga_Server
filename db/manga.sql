@@ -36,9 +36,9 @@ foreign key (id_lab) references lab(id_lab)
 
 CREATE TABLE IF NOT EXISTS temp(
 id_sensor_temp int auto_increment,
-nome varchar(100) not null,
 valor varchar(100) not null,
 id_recipiente int not null,
+time_logged datetime not null,
 primary key (id_sensor_temp),
 foreign key (id_recipiente) references recipiente(id_recipiente)
 );
@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS volume(
 id_volume int auto_increment,
 valor varchar(100) not null,
 id_recipiente int not null,
+time_logged datetime not null,
 primary key (id_volume),
 foreign key (id_recipiente) references recipiente(id_recipiente)
 );
@@ -72,6 +73,10 @@ foreign key (id_utilizador) references utilizador(id_utilizador)
 insert into lab(nome) values("Lab0");
 
 #####################################################
+
+INSERT INTO `manga_lab`.`temp` (`id_sensor_temp`, `valor`, `id_recipiente`, `time_logged`) VALUES ('3', '26', '1', '2024-02-04 17:43:59');
+
+select * from temp where id_recipiente = ? order by temp.time_logged desc limit 1;
 
 ALTER USER 'manga'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pwdam';
 flush privileges;

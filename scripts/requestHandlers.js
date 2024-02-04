@@ -184,8 +184,8 @@ const userGet = (req, res) => {
                             lab: user.lab,
                             img: user.img
                         })
-                    } else{
-                        res.json({error: "No user found with that ID."})
+                    } else {
+                        res.json({ error: "No user found with that ID." })
                     }
                     con.end();
                 })
@@ -237,8 +237,8 @@ const usersGet = (req, res) => {
                     con.end();
                 } else if (result.length > 0) {
                     res.json(result)
-                } else{
-                    res.json({error: "Could not retrieve users from the database."})
+                } else {
+                    res.json({ error: "Could not retrieve users from the database." })
                 }
                 con.end();
             })
@@ -290,10 +290,13 @@ const equipmentUserGet = (req, res) => {
         else {
             let query = mysql.format("select id_lab from utilizador where id_utilizador = ?", [req.params.userid])
             con.query(query, (err, result) => {
-                if (err) res.json({ error: err.message })
+                if (err) {
+                    res.json({ error: err.message })
+                    con.end();
+                }
                 else {
                     let labId = result[0].id_lab
-                    query = mysql.format("select id_recipiente, nome from recipiente where id_lab = ?", [labId])
+                    query = mysql.format("select id_recipiente as id, mac_address as mac, nome as name from recipiente where id_lab = ?", [labId])
                     con.query(query, (err, result) => {
                         if (err) res.json({ error: err.message })
                         else {
@@ -313,16 +316,55 @@ const equipmentUserAdd = (req, res) => {
         else {
             let query = mysql.format("select id_lab from utilizador where id_utilizador = ?", [req.params.userid])
             con.query(query, (err, result) => {
-                if (err) res.json({ error: err.message })
+                if (err) {
+                    res.json({ created: false, error: err.message })
+                    con.end();
+                }
                 else {
                     let labId = result[0].id_lab
                     query = mysql.format("insert into recipiente (nome, mac_address, id_lab) values(?,?,?)", [req.body.name, req.body.mac, labId])
                     con.query(query, (err, result) => {
-                        if (err) res.json({ error: err.message })
+                        if (err) res.json({ created: false, error: err.message })
                         else {
-                            res.json()
+                            res.json({ created: true })
                         }
                     })
+                }
+            })
+        }
+    }))
+}
+
+const equipmentGetSensors = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) res.json({ error: err.message })
+        else {
+            let body = {
+                temp: "",
+                volume: "",
+                motor: ""
+            };
+            let query = mysql.format("select * from temp where id_recipiente = ? order by temp.time_logged desc limit 1;", [req.params.equipmentId])
+            con.query(query, (err, result) => {
+                if (err) {
+                    res.json({ error: err.message })
+                    con.end();
+                }
+                else if (result.length == 1) {
+                    body.temp = result[0];
+                    query = mysql.format("select * from volume where id_recipiente = ? order by volume.time_logged desc limit 1;", [req.params.equipmentId])
+                    con.query(query, (err, result) => {
+                        if (err) res.json({ error: err.message })
+                        else if (result.length == 1) {
+                            body.volume = result[0];
+                            res.json(body);
+                            con.end();
+                        }
+                    })
+                } else {
+                    res.json({ error: "No temperature readings found for this device" })
+                    con.end();
                 }
             })
         }
@@ -338,3 +380,4 @@ module.exports.userUploadImg = userUploadImg;
 module.exports.teamUsersGet = teamUsersGet;
 module.exports.equipmentUserGet = equipmentUserGet;
 module.exports.equipmentUserAdd = equipmentUserAdd;
+module.exports.equipmentGetSensors = equipmentGetSensors;

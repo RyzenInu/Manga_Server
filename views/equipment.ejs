@@ -17,7 +17,37 @@
                 <div class="panelHeader">
                     <div class="panelTitle">Devices</div>
                 </div>
-                <div class="contentPanel equipmentPanel"></div>
+                <div class="equipmentList" id="equipmentList">
+                    <!-- <div class="contentPanel equipmentPanel">
+                        <div class="equipmentPanelIcon">
+                            <span class="material-symbols-rounded">glass_cup</span>
+                        </div>
+                        <div class="equipmentPanelContent">
+                            <div class="equipmentPanelName">Test Name</div>
+                            <div class="equipmentPanelTemperature">
+                                <span class="material-symbols-rounded">thermometer</span>
+                                <div class="equipmentPanelTemperatureValue">
+                                    00ºC / 00ºF
+                                </div>
+                            </div>
+                            <div class="equipmentPanelMotorState">
+                                <span class="material-symbols-rounded">sync</span>
+                                <div class="equipmentPanelMotorStateValue">
+                                    Motor ON
+                                </div>
+                            </div>
+                            <div class="equipmentPanelVolume">
+                                <span class="material-symbols-rounded">water_medium</span>
+                                <div class="volumeBar">
+                                    <div class="volumeBarProgress"></div>
+                                </div>
+                                <div class="equipmentPanelVolumeValue">
+                                    50% (0.15L)
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
                 <div class="" id="btnAddDevice">
                     <div>Add new device</div>
                     <span class="material-symbols-rounded">add</span>
@@ -28,7 +58,7 @@
             <div class="panelBackground">
                 <div class="inputRow">
                     <label for="deviceName">Name</label>
-                    <input type="text" name="deviceName" id="deviceName" placeholder="1A:2B:3C:4D">
+                    <input type="text" name="deviceName" id="deviceName" placeholder="Device name">
                 </div>
                 <div class="inputRow">
                     <label for="deviceMac">Mac Address</label>

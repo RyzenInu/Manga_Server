@@ -58,7 +58,7 @@ body {
     flex-direction: column;
     padding: 1em;
     gap: 1em;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .panel {
@@ -82,6 +82,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 1em;
 }
 
 .panelTitle {
@@ -425,6 +426,7 @@ body {
 
     background-color: rgba(0, 0, 0, 0.5);
     transition: all .5s cubic-bezier(0.87, 0, 0.13, 1);
+    overflow: hidden;
 }
 
 #blurBg.active {
@@ -433,7 +435,8 @@ body {
 }
 
 .mainContent {
-    height: 100%;
+    flex: 1;
+    min-height: 0;
 }
 
 
@@ -502,6 +505,18 @@ input[type="password"]:focus {
     background-color: var(--color-elem-over);
     border-radius: 16px;
     padding: 1em;
+}
+
+.dropdownMenu{
+    border: none;
+    height: 2.5em;
+    padding: 0 .5em;
+    border-radius: 16px;
+    background: var(--color-elem-over);
+}
+
+.dropdownMenu option{
+    background-color: var(--color-bg-panel)
 }
 
 @media only screen and (max-width: 600px) {

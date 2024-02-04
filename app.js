@@ -57,6 +57,7 @@ app.get("/team/users/:userid", requestHandlers.teamUsersGet)
 // Equipment
 app.get("/equipment/user/:userid", requestHandlers.equipmentUserGet)
 app.post("/equipment/user/add/:userid", requestHandlers.equipmentUserAdd)
+app.get("/equipment/:equipmentId/sensors", requestHandlers.equipmentGetSensors)
 
 
 app.listen(options.server.port, () => {
