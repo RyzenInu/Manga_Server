@@ -20,9 +20,11 @@
 
     --color-primary: #fff;
     --color-primary-50: rgba(255, 255, 255, 0.5);
+    --color-primary-30: rgba(255, 255, 255, 0.3);
 
     --color-bg-main: #000;
     --color-bg-panel: #161616;
+    --color-bg-panel-over: #393939;
 
     --color-elem-over: rgba(255, 255, 255, 0.15);
 
@@ -35,7 +37,7 @@
     color: var(--color-primary);
     font-family: Poppins, sans-serif;
     font-weight: bold;
-    transition: all .15s ease-in-out;
+    transition: all .2s cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 *::selection {
@@ -76,6 +78,7 @@ body {
     border-radius: 18px;
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 .panelHeader {
@@ -343,7 +346,7 @@ body {
     font-size: 14pt;
 }
 
-#userPopupLeft{
+#userPopupLeft {
     display: flex;
     flex-direction: column;
     max-width: 10em;
@@ -351,16 +354,16 @@ body {
     max-height: fit-content;
 }
 
-#uploadImgLabel{
+#uploadImgLabel {
     display: none;
 }
 
-#uploadImgLabel.active{
+#uploadImgLabel.active {
     margin-top: .5em;
     display: flex;
 }
 
-#userPopupUploadImgContainer{
+#userPopupUploadImgContainer {
     display: flex;
     flex-direction: column;
 }
@@ -437,6 +440,7 @@ body {
 .mainContent {
     flex: 1;
     min-height: 0;
+    overflow: hidden;
 }
 
 
@@ -501,22 +505,70 @@ input[type="password"]:focus {
     outline: none;
 }
 
-.contentPanel{
+.contentPanel {
     background-color: var(--color-elem-over);
     border-radius: 16px;
     padding: 1em;
 }
 
-.dropdownMenu{
-    border: none;
-    height: 2.5em;
-    padding: 0 .5em;
-    border-radius: 16px;
-    background: var(--color-elem-over);
+.panelActions {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    flex: 1;
+    position: relative;
 }
 
-.dropdownMenu option{
-    background-color: var(--color-bg-panel)
+.dropdownMenu {
+    min-height: 2.5em;
+    border-radius: 16px;
+    background-color: var(--color-bg-panel-over);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    user-select: none;
+    max-width: fit-content;
+    overflow: hidden;
+}
+
+.dropdownMenuSelected {
+    min-height: 2.5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5em;
+    padding: 0 .5em;
+}
+
+.dropdownMenu:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
+}
+
+.dropdownMenu:hover .dropdownOptionList {
+    max-height: 600px;
+    border-top: 1px solid var(--color-primary);
+}
+
+.dropdownOptionList {
+    flex: 1;
+    max-height: 0px;
+    overflow: hidden;
+    border-top: 0px solid var(--color-primary);
+}
+
+.dropdownOption {
+    padding: .2em .5em;
+}
+
+.dropdownOption:hover {
+    cursor: pointer;
+    color: var(--color-manga-redish);
+    background-color: var(--color-bg-panel);
 }
 
 @media only screen and (max-width: 600px) {
@@ -573,4 +625,3 @@ input[type="password"]:focus {
         flex: 1;
     }
 }
-

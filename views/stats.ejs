@@ -1,32 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <script src="./scripts/verifyLogin.js"></script>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Stats</title>
-        <%- include('./head') %>
-        <link rel="stylesheet" href="../styles/stats.css">
-    </head>
+<script src="./scripts/verifyLogin.js"></script>
 
-    <body>
-        <%- include('./navbar'); %>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats</title>
+    <link rel="stylesheet" href="../styles/stats.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <%- include('./head') %>
+</head>
+
+<body>
+    <%- include('./navbar'); %>
         <div class="mainContent panel">
             <div class="panelBackground">
                 <div class="panelHeader">
                     <div class="panelTitle">Statistics</div>
-                    <select class="dropdownMenu" name="selectDevice" id="selectDevice">
-                        <option value="1">Water Cup</option>
-                    </select>
+                    <div class="panelActions">
+                        <div class="dropdownMenu">
+                            <div class="dropdownMenuSelected">
+                                <div>Select Device</div>
+                                <span class="material-symbols-rounded">keyboard_arrow_down</span>
+                            </div>
+                            <div class="dropdownOptionList">
+                                <div class="dropdownOption">Water Cup</div>
+                                <div class="dropdownOption">Water Cup 2</div>
+                                <div class="dropdownOption">Water Cup 3</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="splitVertical">
-                    <div class="contentPanel statsPanel">a</div>
-                    <div class="contentPanel statsPanel">b</div>
+                    <div class="contentPanel statsPanel">
+                        <div class="statsPanelHeader">
+                            <div class="statsHeaderTitle">Temperature</div>
+                        </div>
+                        <div class="statsChartDiv">
+                            <canvas id="statsTempChart"></canvas>
+                        </div>
+                        <div class="statsPanelContent">ab</div>
+                    </div>
+                    <div class="contentPanel statsPanel">
+                        <div class="statsPanelHeader">
+                            <div class="statsHeaderTitle">Volume</div>
+                        </div>
+                        <div class="statsChartDiv">
+                            <canvas id="statsVolChart"></canvas>
+                        </div>
+                        <div class="statsPanelContent">ab</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
-    <script src="./scripts/navbar.js"></script>
-    <script src="./scripts/stats.js"></script>
+</body>
+<script src="./scripts/navbar.js"></script>
+<script src="./scripts/stats.js"></script>
+<script type="module" src="./scripts/statsCharts.js"></script>
+
 </html>

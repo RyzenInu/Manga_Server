@@ -4,14 +4,59 @@
     gap: 1em;
 }
 
-.splitVertical{
+.splitVertical {
     display: flex;
     flex-direction: row;
     gap: 1em;
     flex: 1;
 }
 
-.statsPanel{
+.statsPanel {
     flex: 1;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.statsPanel div{
+    width: 100%;
+}
+
+.statsPanelHeader{
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
+}
+
+.statsHeaderTitle{
+    font-size: 14pt;
+}
+
+.statsChartDiv{
+    flex: 1;
+    max-height: 450px;
+    overflow: hidden;
+    background-color: var(--color-bg-panel);
+    border-radius: 16px;
+    padding: 1em;
+}
+
+.statsChartDiv canvas{
+    
+}
+
+.panelBackground{
+    overflow-y: auto !important;
+    
+    /* Scrollbar Styling */
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-manga-redish) transparent;
+}
+
+@media only screen and (max-width: 600px) {
+    .splitVertical{
+        flex-direction: column;
+    }
 }

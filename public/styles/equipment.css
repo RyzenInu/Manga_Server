@@ -79,7 +79,7 @@
     flex-direction: row;
     gap: .5em;
     min-width: fit-content;
-    min-width: 32%;
+    min-width: 49%;
 }
 
 .equipmentPanel:hover{
@@ -91,11 +91,11 @@
 }
 
 .equipmentPanelIcon {
-    height: 100%;
+    height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-elem-over);
+    /* background-color: var(--color-elem-over); */
     border-radius: 16px;
     aspect-ratio: 1/1;
 }
