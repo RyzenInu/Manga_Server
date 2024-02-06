@@ -2,6 +2,15 @@ if (localStorage.getItem("userId")) {
     window.location.href = "/home";
 }
 
+function toggleScale() {
+    let container = document.getElementsByClassName("loginPanel")[0];
+    container.classList.toggle("scale")
+}
+
+window.onload = (e) => {
+    toggleScale();
+}
+
 let serverIP = "localhost";
 let url = `http://${serverIP}:2000/user/login`;
 let btnLogin = document.getElementById("submitBtn");
@@ -32,7 +41,10 @@ btnLogin.addEventListener("click", (e) => {
             if (json.logged === true) {
                 console.log(json);
                 localStorage.setItem("userId", JSON.parse(json.userId))
-                window.location.href = "/home"
+                toggleScale()
+                setTimeout(() => {
+                    window.location.href = "/home"
+                }, 300);
             } else if (json.logged === false) {
                 alert(json.error)
             }

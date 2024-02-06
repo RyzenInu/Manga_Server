@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS recipiente(
 id_recipiente int auto_increment not null,
 nome varchar(100) not null,
 mac_address varchar(17) not null,
+motor_state bool not null default false,
 id_lab int not null,
 primary key (id_recipiente),
 foreign key (id_lab) references lab(id_lab)
@@ -75,8 +76,10 @@ insert into lab(nome) values("Lab0");
 #####################################################
 
 INSERT INTO `manga_lab`.`temp` (`id_sensor_temp`, `valor`, `id_recipiente`, `time_logged`) VALUES ('3', '26', '1', '2024-02-04 17:43:59');
+INSERT INTO `manga_lab`.`volume` (`id_volume`, `valor`, `id_recipiente`, `time_logged`) VALUES ('1', '0.22', '1', '2024-02-04');
 
-select * from temp where id_recipiente = ? order by temp.time_logged desc limit 1;
+select * from temp where id_recipiente = 1 order by temp.time_logged desc limit 1;
+select * from volume where id_recipiente = 1 order by time_logged desc limit 1;
 
 ALTER USER 'manga'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pwdam';
 flush privileges;

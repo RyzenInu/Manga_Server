@@ -11,6 +11,11 @@ body{
     min-width: 320px;
     max-width: 400px;
     position: relative;
+    transform: scale(0);
+}
+
+.loginPanel.scale{
+    transform: scale(1);
 }
 
 .panelHeader{

@@ -89,7 +89,9 @@ const tempChartOptions = {
             hitRadius: 3,
             backgroundColor: cssColors.primary,
         }
-    }
+    },
+    responsive: true,
+    maintainAspectRatio : false
 };
 
 const volChartOptions = {
@@ -152,7 +154,9 @@ const volChartOptions = {
             hitRadius: 3,
             backgroundColor: cssColors.primary,
         }
-    }
+    },
+    responsive: true,
+    maintainAspectRatio : false
 };
 
 // Temperature Chart
