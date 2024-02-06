@@ -2,6 +2,15 @@ let serverIP = "localhost";
 let url = `http://${serverIP}:2000/`;
 let btnRegister = document.getElementById("submitBtn");
 
+function toggleScale(){
+    let container = document.getElementsByClassName("loginPanel")[0];
+    container.classList.toggle("scale")
+}
+
+window.onload = (e) => {
+    toggleScale();
+}
+
 const validateEmail = (email) => {
     return String(email)
         .toLowerCase()
@@ -49,7 +58,10 @@ btnRegister.addEventListener("click", (e) => {
         .then(response => response.json())
         .then(json => {
             if (json.registered === true) {
-                window.location.href = "/login"
+                toggleScale()
+                setTimeout(() => {
+                    window.location.href = "/login"
+                }, 300);
             } else if (json.registered === false) {
                 alert(json.error)
             }

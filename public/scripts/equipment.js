@@ -148,12 +148,12 @@ function addDevice(name, mac) {
         })
 }
 
-function loadDeviceValues() { // Load Device Values
+async function loadDeviceValues() { // Load Device Values
     let devicePanels = document.getElementsByClassName("equipmentPanel");
     for (let i = 0; i < devicePanels.length; i++) {
         let panel = devicePanels[i]
         let deviceId = panel.id;
-        fetch(url + "equipment/" + deviceId + "/sensors")
+        await fetch(url + "equipment/" + deviceId + "/sensors")
             .then(response => response.json())
             .then(json => {
                 if (!json.error) {

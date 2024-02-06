@@ -8,6 +8,7 @@ const busboy = require('connect-busboy');
 const path = require('path');
 const fs = require('fs');
 const { request, STATUS_CODES } = require("http");
+const mysql = require("mysql")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -28,13 +29,48 @@ const mqtt = new MqttHandler(
 
 // mqtt
 mqtt.connect();
-app.post("/mqtt/send/:topic/:message", (req, res) => {
+app.post("/mqtt/send/:topic/:device/:message", (req, res) => {
     let topic = req.params.topic;
     let message = req.params.message;
-    mqtt.sendMessage(topic, message);
+    let device = req.params.device;
+
+    let payload = { device: device, message: message }
+    mqtt.sendMessage(topic, payload);
     res.sendStatus(200);
 });
 //mqtt.sendMessage("peltierControl", "ON");
+
+
+setInterval(async () => {
+    let randomNum = (Math.random() * (22.0 - 18.0) + 18.0).toFixed(2);
+    let randomVol = (Math.random() * (0.0 - 0.35) + 0.35).toFixed(3);
+    //mqtt.sendMessage("temp", randomNum);
+    //mqtt.sendMessage("volume", randomVol);
+
+    let con = mysql.createConnection(options.database)
+    con.connect((err => {
+        if (err) {
+            console.log(err);
+            con.end();
+        } else {
+            let query = mysql.format("insert into temp(valor, id_recipiente) values(?,?)", [randomNum, 1]);
+            con.query(query, (err, result) => {
+                if (err) {
+                    console.log(err);
+                    con.end();
+                } else {
+                    query = mysql.format("insert into volume(valor, id_recipiente) values(?,?)", [randomVol, 1]);
+                    con.query(query, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            con.end();
+                        } else { con.end() }
+                    })
+                }
+            })
+        }
+    }))
+}, 3000);
 
 // Page Routing
 app.get("/", (req, res) => { res.redirect("/manga") })
@@ -55,9 +91,12 @@ app.post("/user/image/", requestHandlers.userUploadImg)
 app.get("/team/users/:userid", requestHandlers.teamUsersGet)
 
 // Equipment
+app.get("/equipment/all/", requestHandlers.equipmentGetAll)
+app.get("/equipment/mac/:macAdd", requestHandlers.equipmentMacGet)
 app.get("/equipment/user/:userid", requestHandlers.equipmentUserGet)
 app.post("/equipment/user/add/:userid", requestHandlers.equipmentUserAdd)
 app.get("/equipment/:equipmentId/sensors", requestHandlers.equipmentGetSensors)
+app.get("/equipment/:equipmentId/sensors/:numReadings", requestHandlers.equipmentGetSensorsLimit)
 
 
 app.listen(options.server.port, () => {

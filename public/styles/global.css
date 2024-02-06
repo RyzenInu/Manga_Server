@@ -52,6 +52,7 @@ html {
     margin: 0;
     background: #000;
     background-color: var(--color-bg-main);
+    scroll-behavior: smooth;
 }
 
 

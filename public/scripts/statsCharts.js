@@ -1,22 +1,128 @@
 var tempData = [
-    { time: "17:10", count: 19.5 },
-    { time: "17:11", count: 19.6 },
-    { time: "17:12", count: 19.9 },
-    { time: "17:13", count: 20.1 },
-    { time: "17:14", count: 20.0 },
-    { time: "17:15", count: 19.9 },
-    { time: "17:16", count: 20.5 },
+    // { time: "17:10", count: 19.5 },
+    // { time: "17:11", count: 19.6 },
+    // { time: "17:12", count: 19.9 },
+    // { time: "17:13", count: 20.1 },
+    // { time: "17:14", count: 20.0 },
+    // { time: "17:15", count: 19.9 },
+    // { time: "17:16", count: 20.5 },
 ];
 
 var volData = [
-    { time: "17:10", count: 19.5 },
-    { time: "17:11", count: 19.6 },
-    { time: "17:12", count: 19.9 },
-    { time: "17:13", count: 20.1 },
-    { time: "17:14", count: 20.0 },
-    { time: "17:15", count: 19.9 },
-    { time: "17:16", count: 20.5 },
+    // { time: "17:10", count: 19.5 },
+    // { time: "17:11", count: 19.6 },
+    // { time: "17:12", count: 19.9 },
+    // { time: "17:13", count: 20.1 },
+    // { time: "17:14", count: 20.0 },
+    // { time: "17:15", count: 19.9 },
+    // { time: "17:16", count: 20.5 },
 ];
+
+loadDropdownmenu();
+
+function loadDropdownmenu() {
+    let dropdown = document.getElementById("deviceDropdown");
+    let deviceList = dropdown.getElementsByClassName("dropdownOptionList")[0];
+    fetch(url + "equipment/all/").then(response => response.json()).then(json => {
+        json.forEach(device => {
+            let dropdownOption = document.createElement("div");
+            dropdownOption.classList.add("dropdownOption");
+            dropdownOption.id = device.id;
+            dropdownOption.innerText = device.name;
+            dropdownOption.addEventListener("click", (event) => { selectDropdownOption(event.target) });
+            deviceList.appendChild(dropdownOption);
+        });
+    })
+}
+
+function selectDropdownOption(option) {
+    let dropdownMenuSelected = document.getElementsByClassName("dropdownMenuSelectedOption")[0]
+    dropdownMenuSelected.innerText = option.innerText;
+    loadValues(option.id)
+}
+
+async function loadValues(id) {
+    await fetch(url + "equipment/" + id + "/sensors/" + 10)
+        .then(response => response.json())
+        .then(async json => {
+            tempChart.data.labels = [];
+            tempChart.data.datasets[0].data = [];
+            volChart.data.labels = [];
+            volChart.data.datasets[0].data = [];
+
+            if (json.error) {
+                return;
+            }
+
+            let values = {
+                temp: [],
+                vol: []
+            }
+
+            await json.temp.forEach(reading => {
+                values.temp.push(parseFloat(reading.valor))
+                var dt = new Date(reading.time_logged)
+                addData(tempChart, formatDate(dt), reading.valor);
+            });
+            await json.volume.forEach(reading => {
+                values.vol.push(parseFloat(reading.valor))
+                var dt = new Date(reading.time_logged)
+                addData(volChart, formatDate(dt), reading.valor);
+            });
+
+            console.log(values);
+            console.log(Math.max(...values.temp));
+            let tempStats = document.getElementsByClassName("deviceStatsTemp");
+            let volStats = document.getElementsByClassName("deviceStatsVol");
+
+            tempStats[0].innerText = ss.mean(values.temp).toPrecision(4);
+            tempStats[1].innerText = Math.max(...values.temp);
+            tempStats[2].innerText = Math.min(...values.temp);
+            tempStats[3].innerText = ss.quantile(values.temp, 0.75);
+            tempStats[4].innerText = ss.quantile(values.temp, 0.25);
+
+            volStats[0].innerText = ss.mean(values.vol).toPrecision(3);
+            volStats[1].innerText = Math.max(...values.vol);
+            volStats[2].innerText = Math.min(...values.vol);
+            volStats[3].innerText = ss.quantile(values.vol, 0.75);
+            volStats[4].innerText = ss.quantile(values.vol, 0.25);
+        })
+}
+
+function formatDate(date) {
+    let d = new Date(date);
+    let hours;
+    let minutes;
+    let seconds;
+
+    if (d.getHours() < 10) {
+        hours = "0" + d.getHours();
+    } else {
+        hours = d.getHours();
+    }
+
+    if (d.getMinutes() < 10) {
+        minutes = "0" + d.getMinutes();
+    } else {
+        minutes = d.getMinutes();
+    }
+
+    if (d.getSeconds() < 10) {
+        seconds = "0" + d.getSeconds();
+    } else {
+        seconds = d.getSeconds();
+    }
+
+    return `${hours}:${minutes}:${seconds}`;
+}
+
+function addData(chart, label, newData) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(newData);
+    });
+    chart.update();
+}
 
 const cssColors = {
     manga: {
@@ -89,7 +195,9 @@ const tempChartOptions = {
             hitRadius: 3,
             backgroundColor: cssColors.primary,
         }
-    }
+    },
+    responsive: true,
+    maintainAspectRatio: false
 };
 
 const volChartOptions = {
@@ -152,11 +260,13 @@ const volChartOptions = {
             hitRadius: 3,
             backgroundColor: cssColors.primary,
         }
-    }
+    },
+    responsive: true,
+    maintainAspectRatio: false
 };
 
 // Temperature Chart
-new Chart(
+var tempChart = new Chart(
     document.getElementById('statsTempChart'),
     {
         type: 'line',
@@ -175,7 +285,7 @@ new Chart(
 );
 
 // Volume Chart
-new Chart(
+var volChart = new Chart(
     document.getElementById('statsVolChart'),
     {
         type: 'line',

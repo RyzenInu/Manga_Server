@@ -286,7 +286,10 @@ const teamUsersGet = (req, res) => {
 const equipmentUserGet = (req, res) => {
     let con = mysql.createConnection(options.database);
     con.connect((err => {
-        if (err) res.json({ error: err.message })
+        if (err) {
+            res.json({ error: err.message })
+            con.end();
+        }
         else {
             let query = mysql.format("select id_lab from utilizador where id_utilizador = ?", [req.params.userid])
             con.query(query, (err, result) => {
@@ -298,9 +301,13 @@ const equipmentUserGet = (req, res) => {
                     let labId = result[0].id_lab
                     query = mysql.format("select id_recipiente as id, mac_address as mac, nome as name from recipiente where id_lab = ?", [labId])
                     con.query(query, (err, result) => {
-                        if (err) res.json({ error: err.message })
+                        if (err) {
+                            res.json({ error: err.message })
+                            con.end();
+                        }
                         else {
                             res.json(result)
+                            con.end();
                         }
                     })
                 }
@@ -360,6 +367,9 @@ const equipmentGetSensors = (req, res) => {
                             body.volume = result[0];
                             res.json(body);
                             con.end();
+                        } else {
+                            res.json({ error: "No volume readings found for this device" })
+                            con.end();
                         }
                     })
                 } else {
@@ -371,6 +381,95 @@ const equipmentGetSensors = (req, res) => {
     }))
 }
 
+const equipmentGetSensorsLimit = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) res.json({ error: err.message })
+        else {
+            let body = {
+                temp: "",
+                volume: "",
+                //motor: ""
+            };
+            let query = mysql.format("select * from temp where id_recipiente = ? order by temp.time_logged desc limit ?;", [req.params.equipmentId, parseInt(req.params.numReadings)])
+            con.query(query, (err, result) => {
+                if (err) {
+                    res.json({ error: err.message })
+                    con.end();
+                }
+                else if (result.length > 0) {
+                    body.temp = result;
+                    query = mysql.format("select * from volume where id_recipiente = ? order by volume.time_logged desc limit ?;", [req.params.equipmentId, parseInt(req.params.numReadings)])
+                    con.query(query, (err, result) => {
+                        if (err) res.json({ error: err.message })
+                        else if (result.length > 0) {
+                            body.volume = result;
+                            res.json(body);
+                            con.end();
+                        } else {
+                            res.json({ error: "No volume readings found for this device" })
+                            con.end();
+                        }
+                    })
+                } else {
+                    res.json({ error: "No temperature readings found for this device" })
+                    con.end();
+                }
+            })
+        }
+    }))
+}
+
+const equipmentMacGet = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) {
+            res.json({ error: err.message })
+            con.end();
+        }
+        else {
+            let query = mysql.format("select id_lab as labId, id_recipiente as id, mac_address as mac, nome as name from recipiente where mac_address = ?", [req.params.macAdd])
+            con.query(query, (err, result) => {
+                if (err) {
+                    res.json({ error: err.message })
+                    con.end();
+                }
+                else {
+                    res.json(result)
+                    con.end();
+                }
+            })
+
+        }
+    }))
+}
+
+const equipmentGetAll = (req, res) => {
+    let con = mysql.createConnection(options.database);
+    con.connect((err => {
+        if (err) {
+            res.json({ error: err.message })
+            con.end();
+        }
+        else {
+            let query = mysql.format("select id_lab as labId, id_recipiente as id, mac_address as mac, nome as name from recipiente")
+            con.query(query, (err, result) => {
+                if (err) {
+                    res.json({ error: err.message })
+                    con.end();
+                }
+                else {
+                    res.json(result)
+                    con.end();
+                }
+            })
+
+        }
+    }))
+}
+
+
+
 module.exports.usersGet = usersGet;
 module.exports.userCreate = userCreate;
 module.exports.userLogin = userLogin;
@@ -381,3 +480,6 @@ module.exports.teamUsersGet = teamUsersGet;
 module.exports.equipmentUserGet = equipmentUserGet;
 module.exports.equipmentUserAdd = equipmentUserAdd;
 module.exports.equipmentGetSensors = equipmentGetSensors;
+module.exports.equipmentGetSensorsLimit = equipmentGetSensorsLimit;
+module.exports.equipmentMacGet = equipmentMacGet;
+module.exports.equipmentGetAll = equipmentGetAll;

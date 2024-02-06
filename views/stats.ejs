@@ -9,6 +9,7 @@
     <title>Stats</title>
     <link rel="stylesheet" href="../styles/stats.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/simple-statistics@7.8.3/dist/simple-statistics.min.js"></script> 
     <%- include('./head') %>
 </head>
 
@@ -19,15 +20,13 @@
                 <div class="panelHeader">
                     <div class="panelTitle">Statistics</div>
                     <div class="panelActions">
-                        <div class="dropdownMenu">
+                        <div class="dropdownMenu" id="deviceDropdown">
                             <div class="dropdownMenuSelected">
-                                <div>Select Device</div>
+                                <div class="dropdownMenuSelectedOption">Select Device</div>
                                 <span class="material-symbols-rounded">keyboard_arrow_down</span>
                             </div>
                             <div class="dropdownOptionList">
-                                <div class="dropdownOption">Water Cup</div>
-                                <div class="dropdownOption">Water Cup 2</div>
-                                <div class="dropdownOption">Water Cup 3</div>
+                                <!-- <div class="dropdownOption">Water Cup</div> -->
                             </div>
                         </div>
                     </div>
@@ -40,7 +39,13 @@
                         <div class="statsChartDiv">
                             <canvas id="statsTempChart"></canvas>
                         </div>
-                        <div class="statsPanelContent">ab</div>
+                        <div class="statsPanelContent">
+                            <div>A temperatura média é <p class="deviceStatsTemp">_</p>ºC</div>
+                            <div>A temperatura máxima foi <p class="deviceStatsTemp">_</p>ºC</div>
+                            <div>A temperatura mínima foi <p class="deviceStatsTemp">_</p>ºC</div>
+                            <div>75% das medidas estão abaixo de <p class="deviceStatsTemp">_</p>ºC</div>
+                            <div>25% das medidas estão abaixo de <p class="deviceStatsTemp">_</p>ºC</div>
+                        </div>
                     </div>
                     <div class="contentPanel statsPanel">
                         <div class="statsPanelHeader">
@@ -49,7 +54,13 @@
                         <div class="statsChartDiv">
                             <canvas id="statsVolChart"></canvas>
                         </div>
-                        <div class="statsPanelContent">ab</div>
+                        <div class="statsPanelContent">
+                            <div>O volume médio é <p class="deviceStatsVol">_</p>L</div>
+                            <div>O volume máximo foi <p class="deviceStatsVol">_</p>L</div>
+                            <div>O volume mínimo foi <p class="deviceStatsVol">_</p>L</div>
+                            <div>75% das medidas estão abaixo de <p class="deviceStatsVol">_</p>L</div>
+                            <div>25% das medidas estão abaixo de <p class="deviceStatsVol">_</p>L</div>
+                        </div>
                     </div>
                 </div>
             </div>
