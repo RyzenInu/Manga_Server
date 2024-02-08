@@ -99,7 +99,7 @@ app.post("/equipment/user/add/:userid", requestHandlers.equipmentUserAdd)
 app.get("/equipment/:equipmentId/sensors", requestHandlers.equipmentGetSensors)
 app.get("/equipment/:equipmentId/sensors/:numReadings", requestHandlers.equipmentGetSensorsLimit)
 
-
+// Start server
 app.listen(options.server.port, () => {
     console.log(`Server running on http://localhost:${options.server.port}/`);
 });

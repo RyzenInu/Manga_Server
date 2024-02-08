@@ -329,7 +329,7 @@ const equipmentUserAdd = (req, res) => {
                 }
                 else {
                     let labId = result[0].id_lab
-                    query = mysql.format("insert into recipiente (nome, mac_address, id_lab) values(?,?,?)", [req.body.name, req.body.mac, labId])
+                    query = mysql.format("insert into recipiente (nome, mac_address, id_lab, total_volume) values(?,?,?,?)", [req.body.name, req.body.mac, labId, req.body.totalVolume])
                     con.query(query, (err, result) => {
                         if (err) res.json({ created: false, error: err.message })
                         else {
@@ -350,7 +350,8 @@ const equipmentGetSensors = (req, res) => {
             let body = {
                 temp: "",
                 volume: "",
-                motor: ""
+                motor: "",
+                totalVolume: ""
             };
             let query = mysql.format("select * from temp where id_recipiente = ? order by temp.time_logged desc limit 1;", [req.params.equipmentId])
             con.query(query, (err, result) => {
@@ -365,8 +366,18 @@ const equipmentGetSensors = (req, res) => {
                         if (err) res.json({ error: err.message })
                         else if (result.length == 1) {
                             body.volume = result[0];
-                            res.json(body);
-                            con.end();
+                            query = mysql.format("select * from recipiente where id_recipiente = ?", [req.params.equipmentId]);
+                            con.query(query, (err, result) => {
+                                if(err){
+                                    res.json({error: err.message})
+                                    con.end();
+                                } else{
+                                    body.motor = result[0].motor_state;
+                                    body.totalVolume = result[0].total_volume;
+                                    res.json(body);
+                                    con.end();
+                                }
+                            });
                         } else {
                             res.json({ error: "No volume readings found for this device" })
                             con.end();

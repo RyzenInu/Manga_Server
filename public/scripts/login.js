@@ -11,8 +11,9 @@ window.onload = (e) => {
     toggleScale();
 }
 
-let serverIP = "localhost";
-let url = `http://${serverIP}:2000/user/login`;
+let serverIP = "89.115.17.17";
+let serverPort = "3000"
+let url = `http://${serverIP}:${serverPort}/`;
 let btnLogin = document.getElementById("submitBtn");
 
 btnLogin.addEventListener("click", (e) => {
@@ -31,7 +32,7 @@ btnLogin.addEventListener("click", (e) => {
     }
 
 
-    fetch(url, {
+    fetch(url + "user/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
