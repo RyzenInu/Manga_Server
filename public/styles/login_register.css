@@ -54,7 +54,7 @@ body{
 }
 
 input, .submitBtn{
-    height: 40px;
+    height: 40px !important;
 }
 
 input{
@@ -63,6 +63,7 @@ input{
     border: none;
     border-radius: 10px;
     padding: 1em;
+    font-size: 10pt;
     font-weight: 400;
     width: 100%;
 }

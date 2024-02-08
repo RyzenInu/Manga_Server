@@ -9,8 +9,9 @@ let btnConfirmAddDevice = document.getElementById("btnConfirmAddDevice")
 btnConfirmAddDevice.addEventListener("click", (e) => {
     let inputName = document.getElementById("deviceName");
     let inputMac = document.getElementById("deviceMac");
-    if (inputName.value != "" && inputMac.value != "") {
-        addDevice(inputName.value, inputMac.value)
+    let inputTotalVolume = document.getElementById("deviceTotalVolume");
+    if (inputName.value != "" && inputMac.value != "" && inputTotalVolume.value != "") {
+        addDevice(inputName.value, inputMac.value, inputTotalVolume.value)
     } else {
         alert("Both fields must be filled!")
     }
@@ -126,10 +127,11 @@ function createDevicePanel(deviceInfo) {
     return equipmentPanel;
 }
 
-function addDevice(name, mac) {
+function addDevice(name, mac, totalVolume) {
     let body = {
         name: name,
-        mac: mac
+        mac: mac,
+        totalVolume: totalVolume
     };
 
     fetch(url + "equipment/user/add/" + localStorage.getItem("userId"), {
@@ -144,6 +146,7 @@ function addDevice(name, mac) {
             } else if (json.created == true) {
                 alert("Successfully added device to your laboratory.")
                 loadDevices();
+                toggleAddDevicePopup();
             }
         })
 }
@@ -167,7 +170,7 @@ async function loadDeviceValues() { // Load Device Values
 
                     let volBarProgress = panel.getElementsByClassName("equipmentPanelContent")[0].getElementsByClassName("equipmentPanelVolume")[0].getElementsByClassName("volumeBar")[0].getElementsByClassName("volumeBarProgress")[0];
 
-                    volBarProgress.style.width = ((json.volume.valor * 100.0) / 0.3) + "%";
+                    volBarProgress.style.width = ((json.volume.valor * 100.0) / json.totalVolume) + "%";
                 }
             })
     }

@@ -1,5 +1,6 @@
-let serverIP = "localhost";
-let url = `http://${serverIP}:2000/`;
+let serverIP = "89.115.17.17";
+let serverPort = "3000"
+let url = `http://${serverIP}:${serverPort}/`;
 let btnRegister = document.getElementById("submitBtn");
 
 function toggleScale(){
