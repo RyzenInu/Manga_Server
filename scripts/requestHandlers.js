@@ -402,7 +402,7 @@ const equipmentGetSensorsLimit = (req, res) => {
                 volume: "",
                 //motor: ""
             };
-            let query = mysql.format("select * from temp where id_recipiente = ? order by temp.time_logged desc limit ?;", [req.params.equipmentId, parseInt(req.params.numReadings)])
+            let query = mysql.format("select * from (select * from temp where id_recipiente = ? order by temp.time_logged desc limit ?) as t order by t.time_logged asc;", [req.params.equipmentId, parseInt(req.params.numReadings)])
             con.query(query, (err, result) => {
                 if (err) {
                     res.json({ error: err.message })
@@ -410,7 +410,7 @@ const equipmentGetSensorsLimit = (req, res) => {
                 }
                 else if (result.length > 0) {
                     body.temp = result;
-                    query = mysql.format("select * from volume where id_recipiente = ? order by volume.time_logged desc limit ?;", [req.params.equipmentId, parseInt(req.params.numReadings)])
+                    query = mysql.format("select * from (select * from volume where id_recipiente = ? order by volume.time_logged asc limit ?) as t order by t.time_logged asc;", [req.params.equipmentId, parseInt(req.params.numReadings)])
                     con.query(query, (err, result) => {
                         if (err) res.json({ error: err.message })
                         else if (result.length > 0) {

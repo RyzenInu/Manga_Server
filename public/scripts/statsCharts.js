@@ -70,8 +70,8 @@ async function loadValues(id) {
                 addData(volChart, formatDate(dt), reading.valor);
             });
 
-            console.log(values);
-            console.log(Math.max(...values.temp));
+            /*console.log(values);
+            console.log(Math.max(...values.temp));*/
             let tempStats = document.getElementsByClassName("deviceStatsTemp");
             let volStats = document.getElementsByClassName("deviceStatsVol");
 
