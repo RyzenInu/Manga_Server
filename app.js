@@ -91,6 +91,9 @@ app.put("/user/update/:id", requestHandlers.userUpdate)
 app.post("/user/image/", requestHandlers.userUploadImg)
 app.get("/team/users/:userid", requestHandlers.teamUsersGet)
 
+// Admins
+app.get("/users/admin", requestHandlers.usersGet);
+
 // Equipment
 app.get("/equipment/all/", requestHandlers.equipmentGetAll)
 app.get("/equipment/mac/:macAdd", requestHandlers.equipmentMacGet)

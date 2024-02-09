@@ -11,7 +11,7 @@ window.onload = (e) => {
     toggleScale();
 }
 
-let serverIP = "89.115.17.17";
+let serverIP = "localhost";
 let serverPort = "3000"
 let url = `http://${serverIP}:${serverPort}/`;
 let btnLogin = document.getElementById("submitBtn");

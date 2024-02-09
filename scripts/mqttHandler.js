@@ -31,10 +31,11 @@ class MqttHandler {
 
     // When a message arrives, console.log it
     this.mqttClient.on('message', function (topic, message) {
-      console.log("Topic: " + topic + "\nMessage: " + message.toString());
+      //console.log("Topic: " + topic + "\nMessage: " + message.toString());
       try {
         let messageJson = JSON.parse(message.toString());
-
+        /*console.log("JSON: ")
+        console.log(messageJson)*/
         switch (topic) {
           case "temp":
             dbSendTemp(messageJson.clientId, messageJson.message)
@@ -78,42 +79,64 @@ function dbSendTemp(deviceMac, temp) {
         if (err) {
           console.log(err);
           con.end();
+        } else if (result.length > 0) {
+          try {
+            let id = result[0].id;
+            query = mysql.format("insert into temp(valor, id_recipiente) values(?,?)", [temp, id]);
+            con.query(query, (err, result) => {
+              if (err) {
+                console.log(err);
+                con.end();
+              } else {
+                console.log("Success");
+                con.end();
+              }
+            })
+          } catch (e) {
+            console.log(e);
+            con.end();
+          }
         } else {
-          let id = result[0].id;
-          query = mysql.format("insert into temp(valor, id_recipiente) values(?,?)", [temp, id]);
-          con.query(query, (err, result) => {
-            if (err) {
-              console.log(err);
-              con.end();
-            } else { con.end(); }
-          })
+          con.end();
         }
       })
     }
   }))
 }
 
-function dbSendVolume(deviceMac, temp) {
+function dbSendVolume(deviceMac, vol) {
   let con = mysql.createConnection(options.database)
   con.connect((err => {
     if (err) {
       console.log(err);
       con.end();
-    } else {
+    } else if (vol >= 0.0){
+      console.log(vol)
       let query = mysql.format("select id_recipiente as id from recipiente where mac_address = ?", [deviceMac]);
       con.query(query, (err, result) => {
         if (err) {
           console.log(err);
           con.end();
+        } else if (result.length > 0) {
+          try {
+            let id = result[0].id;
+            query = mysql.format("insert into volume(valor, id_recipiente) values(?,?)", [vol, id]);
+            con.query(query, (err, result) => {
+              if (err) {
+                console.log(err);
+                con.end();
+              } else {
+                console.log("Success");
+                con.end();
+              }
+            })
+          } catch (e) {
+            console.log(e);
+            con.end();
+          }
         } else {
-          let id = result[0].id;
-          query = mysql.format("insert into volume(valor, id_recipiente) values(?,?)", [temp, id]);
-          con.query(query, (err, result) => {
-            if (err) {
-              console.log(err);
-              con.end();
-            } else { con.end(); }
-          })
+          console.log("no result");
+          con.end();
         }
       })
     }

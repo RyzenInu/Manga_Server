@@ -76,6 +76,8 @@ insert into lab(nome) values("Lab0");
 
 #####################################################
 
+select * from (select * from temp where id_recipiente = 1 order by temp.time_logged desc limit 10) order by time_logged asc;
+
 INSERT INTO `manga_lab`.`temp` (`id_sensor_temp`, `valor`, `id_recipiente`, `time_logged`) VALUES ('3', '26', '1', '2024-02-04 17:43:59');
 INSERT INTO `manga_lab`.`volume` (`id_volume`, `valor`, `id_recipiente`, `time_logged`) VALUES ('1', '0.22', '1', '2024-02-04');
 
