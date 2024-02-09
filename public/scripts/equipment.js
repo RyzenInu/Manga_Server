@@ -95,7 +95,11 @@ function createDevicePanel(deviceInfo) {
 
     let equipmentPanelMotorStateValue = document.createElement("div")
     equipmentPanelMotorStateValue.classList.add("equipmentPanelMotorStateValue")
-    equipmentPanelMotorStateValue.innerText = "Motor OFF"
+    if (deviceInfo.motor == true) {
+        equipmentPanelMotorStateValue.innerText = "Motor ON"
+    } else if (deviceInfo.motor == false) {
+        equipmentPanelMotorStateValue.innerText = "Motor OFF"
+    }
     equipmentPanelMotorState.appendChild(equipmentPanelMotorStateValue)
     equipmentPanelContent.appendChild(equipmentPanelMotorState)
 

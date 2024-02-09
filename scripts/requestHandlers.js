@@ -299,7 +299,7 @@ const equipmentUserGet = (req, res) => {
                 }
                 else {
                     let labId = result[0].id_lab
-                    query = mysql.format("select id_recipiente as id, mac_address as mac, nome as name from recipiente where id_lab = ?", [labId])
+                    query = mysql.format("select id_recipiente as id, mac_address as mac, nome as name, motor_state as motor from recipiente where id_lab = ?", [labId])
                     con.query(query, (err, result) => {
                         if (err) {
                             res.json({ error: err.message })
