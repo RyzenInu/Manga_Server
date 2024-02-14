@@ -250,15 +250,20 @@ async function loadDeviceValues() { // Load Device Values
             .then(json => {
                 if (!json.error) {
                     let tempValue = panel.getElementsByClassName("equipmentPanelContent")[0].getElementsByClassName("equipmentPanelTemperature")[0].getElementsByClassName("equipmentPanelTemperatureValue")[0];
-
                     tempValue.innerText = json.temp.valor + "ºC";
 
-                    let volValue = panel.getElementsByClassName("equipmentPanelContent")[0].getElementsByClassName("equipmentPanelVolume")[0].getElementsByClassName("equipmentPanelVolumeValue")[0];
+                    let motorValue = panel.getElementsByClassName("equipmentPanelContent")[0].getElementsByClassName("equipmentPanelMotorState")[0].getElementsByClassName("equipmentPanelMotorStateValue")[0];
+                    console.log(json);
+                    if(json.motor == 0){
+                        motorValue.innerText = "Motor OFF";
+                    } else if(json.motor == 1){
+                        motorValue.innerText = "Motor ON";
+                    }
 
+                    let volValue = panel.getElementsByClassName("equipmentPanelContent")[0].getElementsByClassName("equipmentPanelVolume")[0].getElementsByClassName("equipmentPanelVolumeValue")[0];
                     volValue.innerText = json.volume.valor + "L";
 
                     let volBarProgress = panel.getElementsByClassName("equipmentPanelContent")[0].getElementsByClassName("equipmentPanelVolume")[0].getElementsByClassName("volumeBar")[0].getElementsByClassName("volumeBarProgress")[0];
-
                     volBarProgress.style.width = ((json.volume.valor * 100.0) / json.totalVolume) + "%";
                 }
             })
