@@ -92,7 +92,7 @@ flush privileges;
 
 select * from utilizador;
 select * from login_utilizador;
-select * from utilizador;
+select * from recipiente;
 
 select login_utilizador.id_utilizador, utilizador.nome, utilizador.apelido, utilizador.email from login_utilizador inner join utilizador on login_utilizador.id_utilizador = utilizador.id_utilizador where id_login = 1;
 
