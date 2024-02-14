@@ -73,7 +73,7 @@
 
 .equipmentPanel {
     flex: 1;
-    height: 8em;
+    height: fit-content;
     padding: .5em;
     display: flex;
     flex-direction: row;
@@ -82,13 +82,7 @@
     min-width: 49%;
 }
 
-.equipmentPanel:hover{
-    cursor: pointer;
-}
-
-.equipmentPanel:hover .equipmentPanelContent>.{
-
-}
+.equipmentPanel:hover .equipmentPanelContent>. {}
 
 .equipmentPanelIcon {
     height: 50%;
@@ -112,7 +106,7 @@
     justify-content: space-between;
 }
 
-.equipmentPanelName{
+.equipmentPanelName {
     font-size: 16pt;
     line-height: normal;
 }
@@ -128,7 +122,7 @@
 
 .equipmentPanelTemperature *,
 .equipmentPanelMotorState *,
-.equipmentPanelVolume *{
+.equipmentPanelVolume * {
     font-weight: normal;
 }
 
@@ -183,3 +177,39 @@
     flex-direction: row;
     gap: 1em;
 }
+
+.equipmentActionButtons {
+    width: 2.5em;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.equipmentActionButtons>div {
+    border-radius: 8px;
+    background-color: var(--color-elem-over);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.equipmentActionButtons>div.active{
+    background-color: var(--color-manga-redish);
+}
+.equipmentActionButtons>div.active:hover>*{
+    color: var(--color-primary);
+}
+
+.equipmentActionButtons>div:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.equipmentActionButtons>div:hover>* {
+    color: var(--color-manga-redish);
+}
+
+.equipmentActionButtons>div:nth-child(1) {}
+
+.equipmentActionButtons>div:nth-child(2) {}

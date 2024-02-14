@@ -30,6 +30,7 @@ id_recipiente int auto_increment not null,
 nome varchar(100) not null,
 mac_address varchar(17) not null,
 motor_state bool not null default false,
+peltier_state bool not null default false,
 total_volume double not null,
 id_lab int not null default 1,
 primary key (id_recipiente),
@@ -96,3 +97,5 @@ select * from utilizador;
 select login_utilizador.id_utilizador, utilizador.nome, utilizador.apelido, utilizador.email from login_utilizador inner join utilizador on login_utilizador.id_utilizador = utilizador.id_utilizador where id_login = 1;
 
 select login.nome_utilizador as username, utilizador.nome as firstname, utilizador.apelido as lastname, utilizador.email, lab.nome as lab from utilizador inner join lab on utilizador.id_lab = lab.id_lab inner join login_utilizador on utilizador.id_utilizador = login_utilizador.id_utilizador inner join login on login.id_login = login_utilizador.id_login where utilizador.id_utilizador = 1;
+
+select login.nome_utilizador, utilizador.img, utilizador.nome as firstname, utilizador.apelido as lastname, utilizador.email, lab.nome as lab from utilizador inner join login_utilizador on utilizador.id_utilizador = login_utilizador.id_utilizador inner join login on login.id_login = login_utilizador.id_login inner join lab on utilizador.id_lab = lab.id_lab where utilizador.id_lab = 1;

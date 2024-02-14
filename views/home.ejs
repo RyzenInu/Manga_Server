@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <script src="./scripts/verifyLogin.js"></script>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home</title>
-        <%- include('./head') %>
-        <link rel="stylesheet" href="../styles/home.css">
-    </head>
+<script src="./scripts/verifyLogin.js"></script>
 
-    <body>
-        <%- include('./navbar'); %>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <%- include('./head') %>
+        <link rel="stylesheet" href="../styles/home.css">
+</head>
+
+<body>
+    <%- include('./navbar'); %>
         <div class="mainContent panel">
             <div id="mainContainer" class="panelBackground">
                 <div class="contentPanel">
@@ -34,11 +35,14 @@
                             <span class="material-symbols-rounded">open_in_new</span>
                         </div>
                     </div>
-                    <div class="panelContent">
-                        
+                    <div class="panelContent" id="equipmentList">
+                        <!-- <div class="equipmentDevice">
+                            <div>Test Device</div>
+                            <div>Total Volume: </div>
+                        </div> -->
                     </div>
                 </div>
-                <div class="contentPanel">
+                <!-- <div class="contentPanel">
                     <div class="panelHeader">
                         <div class="panelTitle">Stats</div>
                         <div class="button" id="btnOpenStats">
@@ -48,10 +52,11 @@
                     <div class="panelContent">
                         
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
-    </body>
-    <script src="./scripts/navbar.js"></script>
-    <script src="./scripts/home.js"></script>
+</body>
+<script src="./scripts/navbar.js"></script>
+<script src="./scripts/home.js"></script>
+
 </html>

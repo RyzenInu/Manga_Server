@@ -601,6 +601,7 @@ input[type="password"]:focus {
         min-width: 100%;
         gap: 1em;
         order: 3 !important;
+        flex-wrap: wrap;
     }
 
     .navbarVerticalSeparator {
@@ -613,6 +614,7 @@ input[type="password"]:focus {
         padding: .25em;
         flex: 1;
         gap: 0;
+        white-space: nowrap;
     }
 
     #mangaLogo {

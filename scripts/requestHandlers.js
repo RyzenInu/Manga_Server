@@ -261,7 +261,7 @@ const teamUsersGet = (req, res) => {
                 } else if (result.length > 0) {
                     labId = result[0].id_lab;
 
-                    query = mysql.format(`select utilizador.img, utilizador.nome as firstname, utilizador.apelido as lastname, utilizador.email, lab.nome as lab from utilizador inner join lab on utilizador.id_lab = lab.id_lab where utilizador.id_lab = ?`, [labId]);
+                    query = mysql.format(`select login.nome_utilizador as username, utilizador.img, utilizador.nome as firstname, utilizador.apelido as lastname, utilizador.email, lab.nome as lab from utilizador inner join login_utilizador on utilizador.id_utilizador = login_utilizador.id_utilizador inner join login on login.id_login = login_utilizador.id_login inner join lab on utilizador.id_lab = lab.id_lab where utilizador.id_lab = ?`, [labId]);
                     con.query(query, (err, result) => {
                         if (err) {
                             res.json({ error: err.message })
@@ -299,7 +299,7 @@ const equipmentUserGet = (req, res) => {
                 }
                 else {
                     let labId = result[0].id_lab
-                    query = mysql.format("select id_recipiente as id, mac_address as mac, nome as name, motor_state as motor from recipiente where id_lab = ?", [labId])
+                    query = mysql.format("select id_recipiente as id, mac_address as mac, nome as name, motor_state as motor, peltier_state as peltier, total_volume from recipiente where id_lab = ?", [labId])
                     con.query(query, (err, result) => {
                         if (err) {
                             res.json({ error: err.message })
@@ -479,7 +479,13 @@ const equipmentGetAll = (req, res) => {
     }))
 }
 
+// const deviceSendMotor = (req, res) => {
+//     let device = req.body;
+// }
 
+// const deviceSendTemp = (req, res) => {
+//     let device = req.body;
+// }
 
 module.exports.usersGet = usersGet;
 module.exports.userCreate = userCreate;
@@ -494,3 +500,5 @@ module.exports.equipmentGetSensors = equipmentGetSensors;
 module.exports.equipmentGetSensorsLimit = equipmentGetSensorsLimit;
 module.exports.equipmentMacGet = equipmentMacGet;
 module.exports.equipmentGetAll = equipmentGetAll;
+// module.exports.deviceSendMotor = deviceSendMotor;
+// module.exports.deviceSendTemp = deviceSendTemp;

@@ -74,7 +74,12 @@ function setActiveBtn() {
         case "stats":
             btns.item(2).classList.toggle("active");
             break;
-
+        case "lab":
+            btns.item(3).classList.toggle("active");
+            break;
+        case "admin_dashboard":
+            btns.item(4).classList.toggle("active");
+            break;
     }
 }
 

@@ -81,6 +81,8 @@ app.get("/equipment", (req, res) => { res.render("equipment") })
 app.get("/stats", (req, res) => { res.render("stats") })
 app.get("/login", (req, res) => { res.render("login") })
 app.get("/register", (req, res) => { res.render("register") })
+app.get("/lab", (req, res) => { res.render("lab") })
+app.get("/admin_dashboard", (req, res) => { res.render("admin_dashboard") })
 
 // User
 app.get("/users/", requestHandlers.usersGet);
@@ -101,6 +103,72 @@ app.get("/equipment/user/:userid", requestHandlers.equipmentUserGet)
 app.post("/equipment/user/add/:userid", requestHandlers.equipmentUserAdd)
 app.get("/equipment/:equipmentId/sensors", requestHandlers.equipmentGetSensors)
 app.get("/equipment/:equipmentId/sensors/:numReadings", requestHandlers.equipmentGetSensorsLimit)
+app.post("/equipment/send/temp/", (req, res) => {
+    let device = req.body;
+    mqtt.sendMessage("peltierControl", device.mac + " " + device.order);
+    if (device.order == "ON" || device.order == "OFF") {
+        let boolOrder
+        if(device.order == "ON") boolOrder = true;
+        else if(device.order == "OFF") boolOrder = false;
+        console.log(device.order);
+        console.log(boolOrder);
+
+        let con = mysql.createConnection(options.database);
+        con.connect((err => {
+            if (err) {
+                res.json({ error: err.message })
+                con.end();
+            }
+            else {
+                let query = mysql.format("update manga_lab.recipiente set peltier_state = ? where mac_address = ?;", [boolOrder, device.mac])
+                con.query(query, (err, result) => {
+                    if (err) {
+                        res.json({ error: err.message })
+                        con.end();
+                    }
+                    else {
+                        res.json({message: "success"})
+                        con.end();
+                    }
+                })
+            }
+        }));
+
+    }
+});
+app.post("/equipment/send/motor/", (req, res) => {
+    let device = req.body;
+    mqtt.sendMessage("motorControl", device.mac + " " + device.order);
+    if (device.order == "clockwise" || device.order == "OFF") {
+        let boolOrder
+        if(device.order == "clockwise") boolOrder = true;
+        else if(device.order == "OFF") boolOrder = false;
+        console.log(device.order);
+        console.log(boolOrder);
+
+        let con = mysql.createConnection(options.database);
+        con.connect((err => {
+            if (err) {
+                res.json({ error: err.message })
+                con.end();
+            }
+            else {
+                let query = mysql.format("update manga_lab.recipiente set motor_state = ? where mac_address = ?;", [boolOrder, device.mac])
+                con.query(query, (err, result) => {
+                    if (err) {
+                        res.json({ error: err.message })
+                        con.end();
+                    }
+                    else {
+                        res.json({message: "success"})
+                        con.end();
+                    }
+                })
+            }
+        }));
+
+    }
+});
 
 // Start server
 app.listen(options.server.port, () => {

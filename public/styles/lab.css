@@ -1,0 +1,50 @@
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+#labUsers{
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.labUser {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.labUser>div:nth-child(1) {
+    max-height: 5em;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.labUser>div:nth-child(1) img {
+    height: 100%;
+}
+
+.labUser>div:nth-child(2)>div:nth-child(1) {
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
+    justify-content: left;
+    align-items: baseline;
+}
+
+.labUser>div:nth-child(2)>div:nth-child(1)>div:nth-child(1) {
+    font-size: 14pt;
+}
+
+.labUser>div:nth-child(2)>div:nth-child(1)>div:nth-child(2) {
+    font-weight: normal;
+    color: var(--)
+}

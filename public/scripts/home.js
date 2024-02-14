@@ -10,7 +10,6 @@ async function loadTeam() {
     fetch(url + 'team/users/' + localStorage.getItem("userId"))
     .then(response => response.json())
     .then(json => {
-        console.log(json);
         if(json.error){
             console.log(json)
             return;
@@ -48,13 +47,45 @@ async function loadTeam() {
     })
 }
 
-let btnOpenEquipment = document.getElementById("btnOpenEquipment")
-let btnOpenStats = document.getElementById("btnOpenStats")
+loadEquipment();
+async function loadEquipment(){
+    fetch(url + 'equipment/user/' + localStorage.getItem("userId"))
+    .then(response => response.json())
+    .then(json => {
+        console.log(json);
+        if(json.error){
+            console.log(json)
+            return;
+        } else{
+            let devices = json;
+            devices.forEach(device => {
+                
+                let equipmentList = document.getElementById("equipmentList")
+                
+                let equipmentDevice = document.createElement("div");
+                equipmentDevice.classList.add("equipmentDevice")
+    
+                let deviceName = document.createElement("div");
+                deviceName.innerText = device.name;
+                
+                let deviceTotalVolume = document.createElement("div");
+                deviceTotalVolume.innerText = "Total Volume: " +  device.total_volume + "L";
+                    
+                equipmentDevice.appendChild(deviceName);
+                equipmentDevice.appendChild(deviceTotalVolume);
+    
+                equipmentList.appendChild(equipmentDevice);
+            });
+        }
+    })
+}
 
+let btnOpenEquipment = document.getElementById("btnOpenEquipment")
 btnOpenEquipment.addEventListener("click", (e) => {
     window.location.href = "/equipment"
 })
 
-btnOpenStats.addEventListener("click", (e) => {
-    window.location.href = "/stats"
-})
+// let btnOpenStats = document.getElementById("btnOpenStats")
+// btnOpenStats.addEventListener("click", (e) => {
+//     window.location.href = "/stats"
+// })

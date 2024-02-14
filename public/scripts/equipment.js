@@ -128,7 +128,92 @@ function createDevicePanel(deviceInfo) {
     equipmentPanelContent.appendChild(equipmentPanelVolume)
 
     equipmentPanel.appendChild(equipmentPanelContent)
+
+    let buttons = document.createElement("div");
+    buttons.classList.add("equipmentActionButtons");
+
+    let buttonMotor = document.createElement("div");
+    let buttonTemp = document.createElement("div");
+
+    let buttonMotorIcon = document.createElement("span");
+    let buttonTempIcon = document.createElement("span");
+
+    buttonMotorIcon.classList.add("material-symbols-rounded");
+    buttonTempIcon.classList.add("material-symbols-rounded");
+
+    buttonMotorIcon.innerText = "360"
+    buttonTempIcon.innerText = "mode_heat"
+
+    buttonMotor.appendChild(buttonMotorIcon);
+    buttonTemp.appendChild(buttonTempIcon);
+
+    let motorState = deviceInfo.motor;
+    if (motorState == 1) {
+        buttonMotor.classList.add("active");
+    } else if (motorState == 0) {
+        buttonMotor.classList.remove("active");
+    }
+    buttonMotor.addEventListener("click", (e) => {
+        if (e.target.classList.contains("active")) {
+            e.target.classList.remove("active");
+            sendToggleMotor(deviceInfo.mac, "OFF");
+            //currentState = false;
+        } else if (!e.target.classList.contains("active")) {
+            e.target.classList.add("active");
+            sendToggleMotor(deviceInfo.mac, "clockwise");
+            //currentState = true;
+        }
+    })
+
+    let tempState = deviceInfo.peltier;
+    if (tempState == 1) {
+        buttonTemp.classList.add("active");
+    } else if (tempState == 0) {
+        buttonTemp.classList.remove("active");
+    }
+    buttonTemp.addEventListener("click", (e) => {
+        let currentState = tempState;
+        console.log(currentState);
+        if (e.target.classList.contains("active")) {
+            e.target.classList.remove("active");
+            sendToggleTemp(deviceInfo.mac, "OFF");
+            //currentState = false;
+        } else if (!e.target.classList.contains("active")) {
+            e.target.classList.add("active");
+            sendToggleTemp(deviceInfo.mac, "ON");
+            //currentState = true;
+        }
+
+    })
+
+    buttons.appendChild(buttonMotor);
+    buttons.appendChild(buttonTemp);
+    equipmentPanel.appendChild(buttons);
     return equipmentPanel;
+}
+
+async function sendToggleMotor(mac, order) {
+    let body = {
+        mac: mac,
+        order: order
+    }
+    fetch(url + "equipment/send/motor/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", },
+        body: JSON.stringify(body)
+    })
+}
+
+async function sendToggleTemp(mac, order) {
+    let body = {
+        mac: mac,
+        order: order
+    }
+    fetch(url + "equipment/send/temp/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", },
+        body: JSON.stringify(body)
+    })
 }
 
 function addDevice(name, mac, totalVolume) {
